@@ -1,8 +1,8 @@
 import React from 'react'
-import MenuList from '@/components/MenuNav'
+import MenuList from '@/components/Home/MenuNav'
 import { Flex, Input } from 'antd'
-import UserNav from '@/components/UserNav'
-import UserSearch from '@/components/UserSearch'
+import UserNav from '@/components/Home/UserNav'
+import UserSearch from '@/components/Home/UserSearch'
 import '@/styles/header.less'
 const Header = () => {
   return (

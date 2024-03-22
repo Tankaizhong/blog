@@ -3,7 +3,7 @@ import { MenuProps } from 'antd'
 import { MenuItem } from '@/types'
 import { Menu } from 'antd'
 import { navItems } from '@/containers/nav-items'
-import '../styles/menu.less'
+import '../../styles/menu.less'
 
 function getItem(
   label: React.ReactNode,

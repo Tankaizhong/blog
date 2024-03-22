@@ -30,3 +30,4 @@ export interface UserInfo {
   phoneNumber?: string // 可选字段
   token?: string
 }
+
