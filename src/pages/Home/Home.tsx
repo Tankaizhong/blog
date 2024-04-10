@@ -1,12 +1,14 @@
 // ResponsiveNavbar.tsx
 import React, {useEffect, useState} from 'react'
 import '../../styles/home.less'
-import Header from '@/components/Home/Header'
-import LayoutContent from '@/components/Home/LayoutContent'
+import Header from '@/components/Home/Header/Header'
 import {Layout, theme, Menu} from "antd";
 import type {MenuProps} from 'antd';
 import type {Category} from "@/types/model"
 import {fetchCategoriesList} from "@/api/posts";
+import PageFooter from "@/components/PageFooter";
+import {Outlet, Route} from 'react-router-dom'
+
 
 const {Content, Footer, Sider} = Layout;
 
@@ -40,29 +42,30 @@ const Home: React.FC = () => {
     }, []); // 第二个参数为依赖数组，表示仅在组件挂载时执行一次
 
     return (
-        <>
+        <div className="home">
             <Header/>
             <div className="Contain">
                 <Layout>
-                    <div className="home-sider"><Sider width={200}>
-                        <Menu
-                            mode="inline"
-                            defaultSelectedKeys={['1']}
-                            defaultOpenKeys={['sub1']}
-                            style={{height: '100%'}}
-                            items={categories}
-                        />
-                    </Sider>
+                    <div className="home-sider">
+                        <Sider>
+                            <Menu
+                                mode="inline"
+                                // // defaultSelectedKeys={['1']}
+                                // defaultOpenKeys={['sub1']}
+                                items={categories}
+                            />
+                        </Sider>
                     </div>
-
                     <div className="home-content">
-                        <Content>Content</Content>
+                        <Outlet/>
                     </div>
-                    {/*<LayoutContent/>*/}
+                    {/*<GreetingComponent/>*/}
+                    >
                 </Layout>
             </div>
-
-        </>
+            {/*页脚*/}
+            <PageFooter/>
+        </div>
     )
 }
 

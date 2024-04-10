@@ -1,15 +1,24 @@
-// 引入React和相关的库
-// import React from 'react';
+// NotFound.jsx
+import React from 'react'
+import { Result, Button } from 'antd'
+import { Link } from 'react-router-dom'
+import '@/styles/not-found.less'
 
-// 定义NotFoundPage组件
-function Nofound() {
+const NotFound = () => {
   return (
-    <div>
-      <h1>404</h1>
-      <p>页面未找到</p>
+    <div className="not-found-container">
+      <Result
+        status="404"
+        title="404"
+        subTitle="抱歉，页面不存在"
+        extra={
+          <Button type="primary">
+            <Link to="/home">返回首页</Link>
+          </Button>
+        }
+      />
     </div>
   )
 }
 
-// 导出NotFoundPage组件
-export default Nofound
+export default NotFound

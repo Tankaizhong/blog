@@ -6,6 +6,7 @@ export const getStorage = (key) => {
   const value = localStorage.getItem(key)
   if (!value) return null
   return value.indexOf('{') === 0 || value.indexOf('[') === 0 ? JSON.parse(value) : value
+  // return value
 }
 
 /**
@@ -13,8 +14,9 @@ export const getStorage = (key) => {
  * @param {String} key
  * @param {any} value
  */
-export const saveStorage  = (key, value) => {
+export const saveStorage = (key, value) => {
   const data = typeof value === 'object' ? JSON.stringify(value) : value
+  // console.log(key, data)
   localStorage.setItem(key, data)
 }
 
@@ -22,10 +24,10 @@ export const saveStorage  = (key, value) => {
  * 删除本地存储
  * @param {String} key
  */
-export const removeStorage  = (key) => {
+export const removeStorage = (key) => {
   localStorage.removeItem(key)
 }
 
-export const clearStorage  = () => {
+export const clearStorage = () => {
   localStorage.clear()
 }

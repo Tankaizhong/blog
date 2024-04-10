@@ -1,0 +1,42 @@
+.post-preview {
+  display: flex; // 使用 Flex 布局
+  flex-direction: column; // 垂直方向布局
+  height: 140px; // 设置高度为 200px
+  border: 1px solid #f0f0f0; // 设置边框样式
+  border-radius: 2px; // 设置边框圆角
+  margin-top: 2px;
+  .ant-card-body {
+    flex-grow: 1; // 内容部分填充剩余空间
+    display: flex; // 使用 Flex 布局
+    flex-direction: column; // 垂直方向布局
+    justify-content: space-between; // 上下分布
+    padding: 8px; // 设置内边距
+  }
+
+  .post-meta {
+    display: flex; // 使用 Flex 布局
+    justify-content: space-between; // 左右分布
+    align-items: center; // 垂直居中
+    color: rgba(0, 0, 0, 0.45); // 设置文字颜色
+    font-size: 14px; // 设置字体大小
+  }
+  .post-infor {
+    display: inline-block;
+    width: 300px;
+    //background-color: red;
+    span {
+      margin-left: 10px;
+    }
+  }
+
+  .post-tags {
+    display: flex; // 使用 Flex 布局
+    flex-wrap: wrap; // 换行显示
+    margin-top: 8px; // 设置上边距
+  }
+
+  .ant-tag {
+    margin-right: 8px; // 设置右边距
+    margin-bottom: 8px; // 设置下边距
+  }
+}

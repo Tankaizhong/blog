@@ -31,3 +31,13 @@ export interface UserInfo {
   token?: string
 }
 
+export interface ResponseLogin {
+  code: string
+  message: string
+  result: {
+    UserID: number
+    Username: string
+    Admin: boolean
+    token: string
+  }
+}

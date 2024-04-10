@@ -3,7 +3,8 @@ import { MenuProps } from 'antd'
 import { MenuItem } from '@/types'
 import { Menu } from 'antd'
 import { navItems } from '@/containers/nav-items'
-import '../../styles/menu.less'
+import '@/styles/menu.less'
+import { useRouter } from '@/utils/router'
 
 function getItem(
   label: React.ReactNode,
@@ -24,10 +25,12 @@ function getItem(
 }
 
 function menuNav(props) {
+  const { navigateTo } = useRouter()
   const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e)
+    // console.log('click ', e.key)
+    navigateTo('/' + e.key)
   }
-  console.log(navItems)
+  // console.log(navItems)
   return (
     <>
       <Menu

@@ -3,10 +3,12 @@ import { API_BASE_URL } from '@/config'
 import { message } from 'antd'
 import { getToken } from '@/utils/token'
 
+const token = getToken()
+console.log(token)
+
 // create an axios instance
 const service = axios.create({
   baseURL: API_BASE_URL,
-  // withCredentials: true, // send cookies when cross-domain requests
   timeout: 10000, // request timeout
 })
 
@@ -16,8 +18,9 @@ let timer
 service.interceptors.request.use(
   (config) => {
     const token = getToken()
+    // console.log(config.headers)
     if (token) {
-      config.headers.common['Authorization'] = token
+      config.headers['Authorization'] = token
     }
     return config
   },
