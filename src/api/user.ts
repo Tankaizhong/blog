@@ -8,3 +8,7 @@ export const login = (data: User) => {
 export const register = (data: User) => {
   return service.post('/user/register', data)
 }
+//获取当前用户文章
+export const fetchCurrentPostList = () => {
+  return service.get('/user/postList')
+}

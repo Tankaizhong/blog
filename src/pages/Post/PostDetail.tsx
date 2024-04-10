@@ -15,13 +15,13 @@ import {
 import { LikeOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons'
 import { addLike, addView, fetchPostByPostID } from '@/api/posts'
 import { useParams } from 'react-router-dom'
-import { Post } from '@/types/model'
+import { PostModel } from '@/types/model'
 
 const { Title, Text } = Typography
 const { TextArea } = Input
 
 const PostDetail = () => {
-  const [post, setPost] = useState<Post | null>(null) // 文章详情
+  const [post, setPost] = useState<PostModel | null>(null) // 文章详情
   const [comments, setComments] = useState([]) // 文章评论
   const [commentContent, setCommentContent] = useState('') // 评论内容
   const { id } = useParams() // 使用 useParams 钩子获取 URL 参数 postId
@@ -29,7 +29,7 @@ const PostDetail = () => {
   useEffect(() => {
     fetchPostByPostID(id)
       .then((res: any) => {
-        // console.log(res)
+        console.log(res)
         setPost(res)
         return addView(id) as Promise<any> // 这里进行类型断言
       })
@@ -65,7 +65,7 @@ const PostDetail = () => {
     addLike(id)
       .then((response) => {
         // 更新文章的点赞数量
-        setPost((prevPost: Post) => ({
+        setPost((prevPost: PostModel) => ({
           ...prevPost,
           Likes: prevPost.Likes + 1,
         }))

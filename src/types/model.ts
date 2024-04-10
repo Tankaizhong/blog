@@ -12,7 +12,7 @@ export interface User {
   PhoneNumber?: string
 }
 
-export interface Post {
+export interface PostModel {
   PostID: number
   PostDate: Date
   UserID: number

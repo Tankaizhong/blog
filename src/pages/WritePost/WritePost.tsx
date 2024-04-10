@@ -14,10 +14,11 @@ import {
   Popover,
 } from 'antd'
 import MarkdownEditor from './MarkdownEditor' // 假设有一个 Markdown 编辑器组件
-import { fetchCategories, fetchTags } from '@/api/posts' // 导入获取分类和标签的接口方法
+import { publishPost } from '@/api/posts' // 导入获取分类和标签的接口方法
 import '@/styles/write-post.less'
 import { Category, TagModal } from '@/types/model'
 import TagAndCategories from '@/pages/WritePost/TagAndCategories'
+import {useRouter} from "@/utils/router";
 
 const { Content } = Layout
 
@@ -29,6 +30,21 @@ const WritePost: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [syncScroll, setSyncScroll] = useState(false)
 
+  const [popoverVisible, setPopoverVisible] = useState(false) // 控制 Popover 的显示状态
+
+  //子组件的数据
+  const [selectedCategory, setSelectedCategory] = useState('') // 用户选择的分类
+  const [selectedTags, setSelectedTags] = useState([]) // 用户选择的标签
+  // 更新选中的分类
+  const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value)
+  }
+
+  // 更新选中的标签
+  const handleTagChange = (value: string[]) => {
+    setSelectedTags(value)
+  }
+
   // 同步滚动
   const handleSyncScroll = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSyncScroll(e.target.checked)
@@ -39,11 +55,22 @@ const WritePost: React.FC = () => {
     window.scrollTo(0, 0)
   }
 
+
+  const {navigateTo} = useRouter()
   // 提交表单
   const handleSubmit = (values: any) => {
-    // 在这里处理提交表单的逻辑，例如将文章数据发送到后端保存
-    console.log('提交的文章数据：', values)
-    setModalVisible(true) // 打开模态框
+
+    publishPost({ title, content, selectedCategory, selectedTags })
+      .then((response) => {
+        // console.log('文章发布成功:', response)
+        // setModalVisible(true) // 打开模态框
+        navigateTo('/home/publishSuccess')
+
+      })
+      .catch((error) => {
+        console.error('文章发布失败:', error)
+        message.error('文章发布失败')
+      })
   }
 
   // 获取文本框内容的行数和字符数
@@ -69,8 +96,7 @@ const WritePost: React.FC = () => {
       <Content className="write-post-content">
         <Form form={form} onFinish={handleSubmit} layout="vertical">
           <Form.Item
-            label="标题"
-            name="title"
+            name="Title"
             className="title-form-item"
             rules={[{ required: true, message: '请输入标题' }]}
           >
@@ -80,18 +106,23 @@ const WritePost: React.FC = () => {
                 placeholder="请输入标题"
                 onChange={(e) => setTitle(e.target.value)}
               />
-              <Popover title="发布文章" content={TagAndCategories}>
-                <Button type="primary" htmlType="submit">
-                  发布
-                </Button>
+              <Popover
+                trigger="click"
+                title="发布文章"
+                // visible={popoverVisible} // 控制 Popover 的显示状态
+                content={() => (
+                  <TagAndCategories
+                    onCategoryChange={handleCategoryChange}
+                    onTagChange={handleTagChange}
+                    onSubmit={handleSubmit}
+                  />
+                )}
+              >
+                <Button type="primary">发布</Button>
               </Popover>
             </div>
           </Form.Item>
-          <Form.Item
-            label="内容"
-            name="content"
-            rules={[{ required: true, message: '请输入内容' }]}
-          >
+          <Form.Item name="Content" rules={[{ required: true, message: '请输入内容' }]}>
             <MarkdownEditor value={content} onChange={handleContentChange} />
           </Form.Item>
           <div className="word-count">

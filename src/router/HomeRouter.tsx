@@ -8,6 +8,7 @@ import CreatorCenter from '@/components/Creater/CreatorCenter'
 import HomeContent from '@/pages/Home/HomeContent'
 import WritePost from '@/pages/WritePost/WritePost'
 import PostDetail from '@/pages/Post/PostDetail'
+import PublishSuccess from "@/pages/PublishSuccess";
 
 const routes: IRoute[] = [
   //为空时重定位到home
@@ -24,6 +25,11 @@ const routes: IRoute[] = [
         path: 'creator',
         name: 'creator',
         element: <CreatorCenter />,
+      },
+      {
+        path: 'publishSuccess',
+        name: 'publishSuccess',
+        element: <PublishSuccess />,
       },
       {
         path: '',
