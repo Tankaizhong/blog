@@ -7,17 +7,14 @@ export const fetchCategoriesList = () => {
   return service.get('/user/categoriesList')
 }
 //获取文章
-export const fetchPostList = () => {
-  return service.get('/posts/getTopPost')
+export const fetchPostList = (CategoryID) => {
+  return service.post('/posts/getTopPost', { CategoryID })
 }
 //获取指定文章
 export const fetchPostByPostID = (postId) => {
   return service.get(`/posts/${postId}`)
 }
-//点赞
-export const addLike = (PostID: number) => {
-  return service.post(`/posts/like`, { PostID })
-}
+
 //浏览量
 export const addView = (PostID: number) => {
   return service.post(`/posts/view`, { PostID })
@@ -40,6 +37,10 @@ export const publishPost = (data) => {
   return service.post(`/posts/publish`, post)
 }
 
+//根据分类查询
+export const fetchPostByCategory = (CategoryID) => {
+  return service.post(`/posts/fetchPostByCategory`, { CategoryID })
+}
 export const fetchTags = (PostID: number) => {
   return service.get(`/posts/fetchTags`)
 }

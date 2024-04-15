@@ -35,7 +35,7 @@ const UserCard = () => {
 
   return (
     <div className="user-card-content">
-      <Progress percent={50} status="active" />
+      {/*<Progress status="active" />*/}
       <Button className="write-article-btn" type="primary" onClick={handleWriteArticle}>
         写文章
       </Button>

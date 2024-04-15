@@ -10,6 +10,7 @@ export interface User {
   Birthday?: Date
   Age?: number
   PhoneNumber?: string
+  Admin: boolean
 }
 
 export interface PostModel {

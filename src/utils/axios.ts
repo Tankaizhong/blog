@@ -4,7 +4,6 @@ import { message } from 'antd'
 import { getToken } from '@/utils/token'
 
 const token = getToken()
-console.log(token)
 
 // create an axios instance
 const service = axios.create({

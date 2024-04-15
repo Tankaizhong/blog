@@ -8,13 +8,13 @@ import CreatorCenter from '@/components/Creater/CreatorCenter'
 import HomeContent from '@/pages/Home/HomeContent'
 import WritePost from '@/pages/WritePost/WritePost'
 import PostDetail from '@/pages/Post/PostDetail'
-import PublishSuccess from "@/pages/PublishSuccess";
+import PublishSuccess from '@/pages/PublishSuccess'
 
 const routes: IRoute[] = [
   //为空时重定位到home
   {
     path: '/',
-    element: <Navigate to="/home" />,
+    element: <Navigate to="/home/all" />,
   },
   {
     path: '/home',
@@ -32,7 +32,7 @@ const routes: IRoute[] = [
         element: <PublishSuccess />,
       },
       {
-        path: '',
+        path: 'all/:sharedState?/:query?',
         name: 'HomeContent',
         element: <HomeContent />,
       },

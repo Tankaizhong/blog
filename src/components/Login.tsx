@@ -21,7 +21,7 @@ const Login: React.FC = ({ onCloseModal }: { onCloseModal: () => void }) => {
     try {
       const res = (await login({ Username, Password })) as ResponseLogin
       setLoading(false)
-      saveStorage(LOCAL_STORAGE_NAME, res.result.token)
+      saveStorage(LOCAL_STORAGE_NAME, res.result)
       message.success('登录成功')
       // 刷新页面
       window.location.reload()

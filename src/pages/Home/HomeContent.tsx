@@ -1,27 +1,33 @@
 import React, { useState, useEffect } from 'react'
 
-import { fetchPostList } from '@/api/posts'
+import { fetchPostByCategory, fetchPostList } from '@/api/posts'
 import PostPreview from '@/components/PostPreview'
 import { Empty } from 'antd'
+import { useParams, useLocation } from 'react-router-dom'
+
 const HomeContent = () => {
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
+  const query = queryParams.get('query') // 获取查询参数
+  const { sharedState: CategoryID } = useParams<{ sharedState: string }>()
   //调用fetchPostList
   const [postList, setPostList] = useState([]) // 用于存储文章列表数据的状态
-  // console.log(postList)
   // 在组件加载时调用fetchPostList函数获取文章列表数据
+
   const fetchData = async () => {
     try {
-      const post = await fetchPostList()
+      const post = await fetchPostList(CategoryID)
       // console.log(post.data)
       setPostList(post.data) // 更新文章列表数据
     } catch (error) {
       console.error('Failed to fetch post list:', error)
     }
   }
+
   useEffect(() => {
-    fetchData().then((res) => {
-      // console.log(res)
-    }) // 调用获取文章列表数据的函数
-  }, [])
+    if (query) {
+    } else fetchData().then((res) => {}) // 调用获取文章列表数据的函数
+  }, [CategoryID])
 
   return (
     <div>

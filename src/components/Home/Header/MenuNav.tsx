@@ -17,7 +17,6 @@ function getItem(
   return {
     key,
     icon,
-    children,
     label,
     type,
     className: 'custom-menuNav-item',
@@ -27,8 +26,11 @@ function getItem(
 function menuNav(props) {
   const { navigateTo } = useRouter()
   const onClick: MenuProps['onClick'] = (e) => {
-    // console.log('click ', e.key)
+    console.log('click ', e.key)
     navigateTo('/' + e.key)
+    if (e.key == 'home') {
+      navigateTo('/' + e.key + '/all')
+    }
   }
   // console.log(navItems)
   return (

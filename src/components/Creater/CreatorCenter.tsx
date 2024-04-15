@@ -1,58 +1,54 @@
-import React, {useEffect, useState} from 'react'
-import {Layout, Typography, Row, Col, Statistic, Button, Table} from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Layout, Typography, Row, Col, Statistic, Button, Table } from 'antd'
 import '@/styles/publish-post.less'
 import { getStorage } from '@/utils/storage'
 import { LOCAL_STORAGE_NAME } from '@/config'
 import { useHistory } from 'react-router-dom'
 //使用路由
 import { useRouter } from '@/utils/router'
-import {fetchPostList} from "@/api/posts";
-import {fetchCurrentPostList} from "@/api/user";
+import { fetchPostList } from '@/api/posts'
+import { fetchCurrentPostList } from '@/api/user'
 
 const { Content } = Layout
 const { Title } = Typography
 
-
-
-
-
-
 const PublishPost = () => {
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
-  const [articles, setArticles] = useState([]); // 假设已发布文章的数据格式为数组
+  const [articles, setArticles] = useState([]) // 假设已发布文章的数据格式为数组
 
   const fetchUser = async () => {
     try {
-      const userData = await fetchCurrentPostList(); // 调用获取用户文章列表的 API 函数
+      const userData = await fetchCurrentPostList() // 调用获取用户文章列表的 API 函数
       const articlesWithKeys = userData.data.map((article, index) => ({
         ...article,
         key: article.PostID.toString(), // 使用 PostID 作为 key
-      }));
-      setArticles(articlesWithKeys); // 将获取到的文章列表数据设置到状态中
-      const stats = calculatePostStats(articlesWithKeys);
-      setStats(stats);
+      }))
+      setArticles(articlesWithKeys) // 将获取到的文章列表数据设置到状态中
+      const stats = calculatePostStats(articlesWithKeys)
+      setStats(stats)
     } catch (error) {
-      console.error('获取用户文章列表失败', error);
+      console.error('获取用户文章列表失败', error)
     }
-  };
+  }
 
   useEffect(() => {
     // 在组件加载时调用获取用户文章列表的函数
-    fetchUser().then(() => {
-      console.log('用户文章列表获取成功');
-    }).catch((error) => {
-      console.error('获取用户文章列表失败', error);
-    });
-
-  }, []); // 传入空数组作为第二个参数，表示只在组件加载时执行一次
+    fetchUser()
+      .then(() => {
+        console.log('用户文章列表获取成功')
+      })
+      .catch((error) => {
+        console.error('获取用户文章列表失败', error)
+      })
+  }, []) // 传入空数组作为第二个参数，表示只在组件加载时执行一次
 
   // 删除文章
   const handleDeleteArticle = (id) => {
     // 根据文章 ID 删除文章，并更新已发布文章列表
-    const updatedArticles = articles.filter((article) => article.id !== id);
+    const updatedArticles = articles.filter((article) => article.id !== id)
     setArticles(updatedArticles)
-  };
+  }
 
   const columns = [
     {
@@ -85,36 +81,38 @@ const PublishPost = () => {
       key: 'operation',
       align: 'center', // 文本居中对齐
       render: (text, record) => (
-          <Button type="link" onClick={() => handleDeleteArticle(record.id)}>删除</Button>
+        <Button type="link" onClick={() => handleDeleteArticle(record.id)}>
+          删除
+        </Button>
       ),
     },
-  ];
+  ]
   const { navigateTo } = useRouter()
   const [stats, setStats] = useState({
     totalPosts: 0,
     totalViews: 0,
     totalLikes: 0,
-    totalComments: 0
-  });
+    totalComments: 0,
+  })
   function calculatePostStats(posts) {
     console.log(posts)
-    let totalPosts = posts.length;
-    let totalViews = 0;
-    let totalLikes = 0;
-    let totalComments = 0;
+    let totalPosts = posts.length
+    let totalViews = 0
+    let totalLikes = 0
+    let totalComments = 0
 
-    posts.forEach(post => {
-      totalViews += post.Views || 0;
-      totalLikes += post.Likes || 0;
+    posts.forEach((post) => {
+      totalViews += post.Views || 0
+      totalLikes += post.Likes || 0
       // 假设每篇文章的评论数存储在 "Replies" 属性中
-      totalComments += post.Replies || 0;
-    });
+      totalComments += post.Replies || 0
+    })
     return {
       totalPosts,
       totalViews,
       totalLikes,
-      totalComments
-    };
+      totalComments,
+    }
   }
   useEffect(() => {
     // 检查本地 token，这里假设使用 localStorage 存储

@@ -18,7 +18,7 @@ import { publishPost } from '@/api/posts' // 导入获取分类和标签的接�
 import '@/styles/write-post.less'
 import { Category, TagModal } from '@/types/model'
 import TagAndCategories from '@/pages/WritePost/TagAndCategories'
-import {useRouter} from "@/utils/router";
+import { useRouter } from '@/utils/router'
 
 const { Content } = Layout
 
@@ -55,17 +55,14 @@ const WritePost: React.FC = () => {
     window.scrollTo(0, 0)
   }
 
-
-  const {navigateTo} = useRouter()
+  const { navigateTo } = useRouter()
   // 提交表单
   const handleSubmit = (values: any) => {
-
     publishPost({ title, content, selectedCategory, selectedTags })
       .then((response) => {
         // console.log('文章发布成功:', response)
         // setModalVisible(true) // 打开模态框
         navigateTo('/home/publishSuccess')
-
       })
       .catch((error) => {
         console.error('文章发布失败:', error)

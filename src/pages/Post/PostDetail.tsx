@@ -13,9 +13,11 @@ import {
   Statistic,
 } from 'antd'
 import { LikeOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons'
-import { addLike, addView, fetchPostByPostID } from '@/api/posts'
+import { addView, fetchPostByPostID } from '@/api/posts'
+import { addLike, removeLike, fetchLikeStatus } from '@/api/like'
 import { useParams } from 'react-router-dom'
 import { PostModel } from '@/types/model'
+import LikeButton from '@/components/LikeButton'
 
 const { Title, Text } = Typography
 const { TextArea } = Input
@@ -24,26 +26,23 @@ const PostDetail = () => {
   const [post, setPost] = useState<PostModel | null>(null) // 文章详情
   const [comments, setComments] = useState([]) // 文章评论
   const [commentContent, setCommentContent] = useState('') // 评论内容
-  const { id } = useParams() // 使用 useParams 钩子获取 URL 参数 postId
+  const { id: PostID } = useParams() // 使用 useParams 钩子获取 URL 参数 postId
+  const [liked, setLiked] = useState(false)
 
   useEffect(() => {
-    fetchPostByPostID(id)
+    fetchPostByPostID(PostID)
       .then((res: any) => {
-        console.log(res)
+        // console.log(res)
         setPost(res)
-        return addView(id) as Promise<any> // 这里进行类型断言
+        return addView(PostID) as Promise<any> // 这里进行类型断言
       })
-      .then((res) => {
-        console.log(1)
-      })
-    // 设置获取到的文章详情数据到 post 状态中
-    // setPost(responseData);
-
-    // 在这里调用后端接口获取文章评论数据
-    // 示例：fetchPostComments();
-    // 设置获取到的文章评论数据到 comments 状态中
-    // setComments(responseData);
-  }, [])
+      .then((res) => {})
+    // console.log(id)
+    fetchLikeStatus(PostID).then((res) => {
+      // console.log(res.liked,'1111111111111')
+      setLiked(res.liked)
+    })
+  }, [PostID])
 
   const handleCommentChange = (e) => {
     setCommentContent(e.target.value)
@@ -60,20 +59,32 @@ const PostDetail = () => {
 
   //点赞
   const handleLikeClick = () => {
-    // 在这里调用后端接口以增加点赞
-    // 示例：调用一个名为 addLike 的 API 接口，传递文章 ID，然后更新点赞数量
-    addLike(id)
-      .then((response) => {
-        // 更新文章的点赞数量
-        setPost((prevPost: PostModel) => ({
-          ...prevPost,
-          Likes: prevPost.Likes + 1,
-        }))
-      })
-      .catch((error) => {
-        console.error('点赞失败', error)
-        // 处理点赞失败的情况
-      })
+    if (liked) {
+      removeLike(PostID)
+        .then(() => {
+          setPost((prevPost: PostModel) => ({
+            ...prevPost,
+            Likes: prevPost.Likes - 1,
+          }))
+          setLiked(false)
+        })
+        .catch((error) => {
+          console.error('取消点赞失败', error)
+        })
+    } else {
+      addLike(PostID)
+        .then((response) => {
+          // 更新文章的点赞数量
+          setPost((prevPost: PostModel) => ({
+            ...prevPost,
+            Likes: prevPost.Likes + 1,
+          }))
+        })
+        .catch((error) => {
+          console.error('点赞失败', error)
+          // 处理点赞失败的情况
+        })
+    }
   }
 
   return (
@@ -85,7 +96,11 @@ const PostDetail = () => {
           <Divider />
           <Space>
             <div onClick={handleLikeClick}>
-              <Statistic title="点赞数" value={post.Likes} prefix={<LikeOutlined />} />
+              <Statistic
+                title="点赞数"
+                value={post.Likes}
+                prefix={<LikeButton handleLiked={setLiked} liked={liked} />}
+              />
             </div>
             <Statistic title="浏览数" value={post.Views} prefix={<EyeOutlined />} />
           </Space>
