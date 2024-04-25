@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { ClockCircleOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons'
+import {
+  ClockCircleOutlined,
+  HeartOutlined,
+  LikeOutlined,
+  SearchOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
 import { Avatar, Badge, Button, Popover, Space, Modal } from 'antd'
 import '@/styles/user-nav.less'
-import UserCard from '@/components/Home/UserCard'
+import UserCard from '@/components/UserCard'
 import { getStorage } from '@/utils/storage'
 import { LOCAL_STORAGE_NAME } from '@/config'
 import { useNavigate } from 'react-router-dom'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
+import LikeCard from '@/components/LikeCard'
 
 const UserNav = () => {
-  const [count, setCount] = useState(null)
+  const [count, setCount] = useState()
   const [token, setToken] = useState(null)
   const [visible, setVisible] = useState(false) // 控制登录的 Modal 是否可见
   const [isLogin, setIsLogin] = useState(true) // 默认显示登录界面
@@ -35,32 +42,48 @@ const UserNav = () => {
   const handleToggleLogin = () => {
     setIsLogin((prevState) => !prevState)
   }
-
   const handleCloseModal = () => {
     setVisible(false) // 关闭 Modal
   }
   const handleRegisterSuccess = () => {
     setIsLogin(true) // 注册成功后切换到登录页面
   }
+  const [userInfo, setUserInfo] = useState(null)
+  useEffect(() => {
+    // 组件首次渲染时从本地存储中获取用户信息
+    const userInfo = getStorage(LOCAL_STORAGE_NAME)
+    if (userInfo) {
+      setUserInfo(userInfo)
+    }
+  }, [token])
   return (
     <div className="user-content">
       <Space size="middle">
-        <Badge count={count}>
+        <div className="login-content">
           {/* token为空,则显示登录按钮 */}
           {token ? (
-            <div className="login-content">
-              <div className="user-nav">
-                <Popover content={UserCard}>
-                  <Avatar icon={<UserOutlined />} shape="square" size="large" />
+            <div>
+              <Badge count={3}>
+                <Popover content={LikeCard}>
+                  <LikeOutlined style={{ color: '#1890ff', fontSize: '24px' }} />
                 </Popover>
-              </div>
+              </Badge>
+              <Popover content={UserCard}>
+                <Avatar
+                  src={userInfo && userInfo.Avatar}
+                  icon={<UserOutlined />}
+                  shape="square"
+                  size="large"
+                />
+              </Popover>
+              {/* 点赞组件 */}
             </div>
           ) : (
             <Button onClick={handleLogin} icon={<UserOutlined />}>
               登录 | 注册
             </Button>
           )}
-        </Badge>
+        </div>
       </Space>
 
       {/* 登录的 Modal */}

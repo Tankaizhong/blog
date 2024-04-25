@@ -2,20 +2,20 @@ import React from 'react'
 import { Form, Input, Button, Checkbox, message } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import '@/styles/register.less'
-import { User } from '@/types/model'
+import { UserType } from '@/types/model'
 import { register } from '@/api/user'
 import { useNavigate } from 'react-router-dom'
 import { Rule } from 'antd/lib/form'
 
 const Register: React.FC = ({ onSuccess }) => {
   const navigate = useNavigate()
-  const onFinish = async ({ agreement, ...values }: User & { agreement: boolean }) => {
+  const onFinish = async ({ agreement, ...values }: UserType & { agreement: boolean }) => {
     //协议验证
     if (!agreement) {
       message.error('请阅读并同意协议后再注册')
       return
     }
-    const result = await register(values as User).then((res) => {
+    const result = await register(values as UserType).then((res) => {
       console.log('注册成功:', res)
       onSuccess() // 调用注册成功的回调函数
     })
@@ -50,7 +50,10 @@ const Register: React.FC = ({ onSuccess }) => {
         <Form.Item>
           <Form.Item name="agreement" valuePropName="checked" noStyle>
             <Checkbox>
-              我已阅读并同意<a href="/">协议</a>
+              我已阅读并同意
+              <a href="/agreement" target="_blank">
+                协议
+              </a>
             </Checkbox>
           </Form.Item>
         </Form.Item>

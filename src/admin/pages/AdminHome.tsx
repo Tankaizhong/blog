@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { Layout, Menu, MenuProps } from 'antd'
-import { DesktopOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons'
+import {
+  DesktopOutlined,
+  UserOutlined,
+  SettingOutlined,
+  AppstoreOutlined,
+  MessageOutlined,
+} from '@ant-design/icons'
 import { Outlet } from 'react-router-dom'
 
 import { checkAdminAPI, getUserInfo } from '@/admin/api/admin' // 从后端获取用户信息的函数
 
 const { Sider, Content } = Layout
-import { useRouter } from '@/utils/router'
+
 import Login from '@/components/Login'
 import { getStorage } from '@/utils/storage'
 import { LOCAL_STORAGE_NAME } from '@/config'
+import { navigateTo } from '@/utils/router'
 
 const AdminDashboard = () => {
   const [collapsed, setCollapsed] = useState(false)
-  const { navigateTo } = useRouter()
+
   const toggleCollapsed = () => {
     setCollapsed(!collapsed)
   }
   const handleMenuClick = (e: MenuProps['onClick']) => {
-    console.log(e.key)
+    // console.log(e.key)
     navigateTo(`/admin/${e.key}`)
   }
   //判断超级管理员
@@ -42,6 +49,15 @@ const AdminDashboard = () => {
           <Menu.Item key="TagManager" icon={<DesktopOutlined />}>
             标签管理
           </Menu.Item>
+
+          <Menu.Item key="CategoryManager" icon={<AppstoreOutlined />}>
+            分类管理
+          </Menu.Item>
+
+          <Menu.Item key="CommentManager" icon={<MessageOutlined />}>
+            评论管理
+          </Menu.Item>
+
           <Menu.SubMenu key="sub1" icon={<UserOutlined />} title="用户管理">
             <Menu.Item key="users">用户列表</Menu.Item>
           </Menu.SubMenu>

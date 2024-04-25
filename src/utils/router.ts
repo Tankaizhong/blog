@@ -1,20 +1,19 @@
-// utils/router.ts
-import { useNavigate } from 'react-router-dom'
+// routerUtils.js
+import { useLocation } from 'react-router-dom'
 
-export const useRouter = () => {
-  const navigate = useNavigate()
+// 导航到指定路径
+export const navigateTo = (path) => {
+  window.location.href = path
+}
 
-  const navigateTo = (path: string) => {
-    navigate(path)
-  }
+// 获取 URL 参数
+export const getUrlParams = () => {
+  const location = useLocation()
+  return new URLSearchParams(location.search)
+}
 
-  const navigateBack = () => {
-    navigate(-1)
-  }
-
-  const replacePath = (path: string) => {
-    navigate(path, { replace: true })
-  }
-
-  return { navigateTo, navigateBack, replacePath }
+// 获取指定参数的值
+export const getUrlParam = (paramName) => {
+  const params = getUrlParams()
+  return params.get(paramName)
 }

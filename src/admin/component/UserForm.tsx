@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Input, Button, Modal, Upload, InputNumber, message } from 'antd'
-import { User } from '@/types/model'
+import { UserType } from '@/types/model'
 import { updateUser, uploadAvatar, createUser, register } from '@/api/user'
+import { getStorage, saveStorage } from '@/utils/storage'
+import { LOCAL_STORAGE_NAME } from '@/config'
 
 interface UserFormProps {
-  userInfo: User
+  userInfo: UserType
   onClose: () => void
 }
 
@@ -24,30 +26,56 @@ const UserForm: React.FC<UserFormProps> = ({ userInfor, onClose }) => {
       await register(values)
     } else {
       // 更新用户信息
-      await updateUser(values)
+      const { Avatar, ...otherInfo } = values
+      await updateUser(otherInfo)
         .then((res) => {
-          console.log('User info updated:', res)
+          // console.log('User info updated:', res)
           // 处理更新用户信息后的响应
         })
         .catch((error) => {
           console.error('Error updating user info:', error)
         })
+      // console.log(avatarFile instanceof File,avatarFile)
       // 更新头像
-      if (avatarFile) {
+      if (avatarFile instanceof File) {
         const formData = new FormData()
-        formData.append('avatar', avatarFile)
+        formData.append('file', Avatar.file)
         await uploadAvatar(formData)
           .then((res) => {
-            console.log('Avatar uploaded:', res)
-            // 处理上传头像后的响应
+            values.Avatar = res?.imageUrl
           })
           .catch((error) => {
             console.error('Error uploading avatar:', error)
           })
       }
     }
-
+    console.log(values)
+    if (isAdminLoggedIn()) {
+      console.log(isAdminLoggedIn())
+      // 如果是管理员自己修改信息，则更新本地保存的用户信息
+      updateLocalUserInfo(values)
+    }
     onClose()
+  }
+
+  const isAdminLoggedIn = () => {
+    const savedUserInfo = getStorage(LOCAL_STORAGE_NAME)
+    if (savedUserInfo) {
+      return savedUserInfo.Username === 'root'
+    }
+    return false
+  }
+  // 更新本地保存的用户信息
+  const updateLocalUserInfo = (userInfo: UserType) => {
+    // 从本地存储中获取之前保存的用户信息
+    const savedUserInfo = getStorage(LOCAL_STORAGE_NAME) as UserType & string
+
+    if (savedUserInfo) {
+      // 将新的用户信息与之前的信息合并
+      const updatedUserInfo = { ...savedUserInfo, ...userInfo }
+      // 将更新后的用户信息重新保存到本地存储中
+      saveStorage(LOCAL_STORAGE_NAME, updatedUserInfo)
+    }
   }
 
   const updateOtherInfo = async (values: any) => {

@@ -5,6 +5,8 @@ import UserList from '@/admin/pages/UserList'
 import UserForm from '@/admin/component/UserForm'
 import Dashboard from '@/admin/pages/Dashboard'
 import TagManager from '@/admin/pages/TagManager'
+import CategoryManager from '@/admin/pages/CategoryManager'
+import CommentManager from '@/admin/pages/CommentManager'
 const routes: IRoute[] = [
   {
     path: '/admin',
@@ -21,6 +23,14 @@ const routes: IRoute[] = [
       {
         path: 'TagManager',
         element: <TagManager />,
+      },
+      {
+        path: 'CategoryManager',
+        element: <CategoryManager />,
+      },
+      {
+        path: 'CommentManager',
+        element: <CommentManager />,
       },
     ],
   },

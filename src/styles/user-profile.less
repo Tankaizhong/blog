@@ -1,0 +1,46 @@
+.user-profile-edit-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px;
+
+  .ant-form-item {
+    margin-bottom: 20px;
+    width: calc(50% - 20px); // 计算表单项的宽度
+    box-sizing: border-box;
+    float: left;
+    border: 1px solid #d9d9d9;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .avatar-preview {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    //margin-bottom: 20px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .ant-form-item-label {
+    width: 100px;
+    text-align: right;
+    padding-right: 10px;
+  }
+
+  .ant-input {
+    border-radius: 5px;
+    width: calc(100% - 22px); // 调整输入框宽度，考虑到边框宽度
+  }
+
+  .ant-btn {
+    width: 100%;
+  }
+
+  .ant-form-item-control {
+    display: inline-block;
+    //margin-left: 100px;
+  }
+}

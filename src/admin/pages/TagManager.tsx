@@ -3,14 +3,14 @@ import { Button, Tag, Modal, Form, Input, message, Space, Table } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { addTag, deleteTag, getAllTags, updateTag } from '../api/tag'
 import '../style/TagManager.less'
-import { TagModal } from '@/types/model' // 引入样式文件
+import { TagType } from '@/types/model' // 引入样式文件
 
 const { confirm } = Modal
 
 const TagManager: React.FC = () => {
-  const [tags, setTags] = useState<TagModal[]>([])
+  const [tags, setTags] = useState<TagType[]>([])
   const [visible, setVisible] = useState(false)
-  const [editingTag, setEditingTag] = useState<TagModal | null>(null)
+  const [editingTag, setEditingTag] = useState<TagType | null>(null)
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const TagManager: React.FC = () => {
     try {
       const data = await getAllTags()
       if (data && data.tags) {
-        const processedTags = data.tags.map((tag: TagModal, index) => {
+        const processedTags = data.tags.map((tag: TagType, index) => {
           return {
             ...tag,
             key: tag.TagID,
@@ -50,7 +50,7 @@ const TagManager: React.FC = () => {
     }
   }
 
-  const showDeleteConfirm = (tag: TagModal) => {
+  const showDeleteConfirm = (tag: TagType) => {
     confirm({
       title: '确定要删除此标签吗?',
       content: '此操作无法撤销',
@@ -88,7 +88,7 @@ const TagManager: React.FC = () => {
     }
   }
 
-  const handleEdit = (tag: TagModal) => {
+  const handleEdit = (tag: TagType) => {
     setEditingTag(tag)
     console.log(editingTag)
     form.setFieldsValue({
@@ -100,11 +100,6 @@ const TagManager: React.FC = () => {
   }
 
   const columns = [
-    {
-      title: '标签ID',
-      dataIndex: 'TagID',
-      key: 'TagID',
-    },
     {
       title: '标签名',
       dataIndex: 'TagName',
@@ -123,7 +118,7 @@ const TagManager: React.FC = () => {
     {
       title: '操作',
       key: 'action',
-      render: (text, record: TagModal) => (
+      render: (text, record: TagType) => (
         <Space size="middle">
           <a onClick={() => handleEdit(record)}>编辑</a>
           <a onClick={() => showDeleteConfirm(record)}>删除</a>

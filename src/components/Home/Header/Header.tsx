@@ -4,10 +4,9 @@ import { Button, Flex, Input } from 'antd'
 import UserNav from '@/components/Home/Header/UserNav'
 import UserSearch from '@/components/Home/UserSearch'
 import '@/styles/header.less'
-import { useRouter } from '@/utils/router'
+import { navigateTo } from '@/utils/router'
 
 const Header = () => {
-  const { navigateTo } = useRouter()
   /**
    * 跳转到创作者中心
    */
@@ -17,7 +16,7 @@ const Header = () => {
   }
   return (
     <div className="headerContent">
-      <Flex justify="space-between" gap="middle" align="center">
+      <Flex justify="space-between" gap="small" align="center">
         <div className="logo">
           <h3>BOLG</h3>
         </div>

@@ -2,8 +2,8 @@ module.exports = {
   root: true,
   env: { browser: true, es2020: true },
   extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
+    process.env.DISABLE_LINT ? 'off' : 'eslint:recommended',
+    process.env.DISABLE_LINT ? 'off' : 'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],

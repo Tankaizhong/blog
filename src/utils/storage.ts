@@ -14,7 +14,8 @@ export const getStorage = (key) => {
  * @param {String} key
  * @param {any} value
  */
-export const saveStorage = (key, value) => {
+export const saveStorage = (key: string, value: Object) => {
+  // console.log(value)
   const data = typeof value === 'object' ? JSON.stringify(value) : value
   // console.log(key, data)
   localStorage.setItem(key, data)
@@ -24,7 +25,7 @@ export const saveStorage = (key, value) => {
  * 删除本地存储
  * @param {String} key
  */
-export const removeStorage = (key) => {
+export const removeStorage = (key: string) => {
   localStorage.removeItem(key)
 }
 

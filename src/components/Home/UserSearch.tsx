@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { AutoComplete, Input } from 'antd'
-import { useRouter } from '@/utils/router'
+
 import { useLocation } from 'react-router-dom'
+import { navigateTo } from '@/utils/router'
 
 const { Search } = Input
 
@@ -30,7 +31,6 @@ const UserSearch = () => {
     // console.log('onSelect', value);
   }
 
-  const { navigateTo } = useRouter()
   const handleEnter = (value) => {
     if (value) {
       const updatedHistory = [

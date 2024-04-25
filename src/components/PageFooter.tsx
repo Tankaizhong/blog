@@ -8,13 +8,13 @@ const PageFooter: React.FC = () => {
         <div className="footer-links">
           <ul>
             <li>
-              <a href="#">关于我们</a>
+              <a href="#">关于我</a>
             </li>
             <li>
               <a href="#">服务项目</a>
             </li>
             <li>
-              <a href="#">联系我们</a>
+              <a href="https://qm.qq.com/q/8REqfLkV1e">联系我</a>
             </li>
           </ul>
         </div>
@@ -25,7 +25,7 @@ const PageFooter: React.FC = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>© 2024 大连大学计算机科学与技术学院 - All rights reserved</p>
+        <p>© 2024 大连大学信息工程学院 - All rights reserved</p>
       </div>
     </div>
   )

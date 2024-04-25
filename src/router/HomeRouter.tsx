@@ -9,6 +9,8 @@ import HomeContent from '@/pages/Home/HomeContent'
 import WritePost from '@/pages/WritePost/WritePost'
 import PostDetail from '@/pages/Post/PostDetail'
 import PublishSuccess from '@/pages/PublishSuccess'
+import Agreement from '@/pages/Agreement'
+import { withAuth } from '@/HOC/withAuth'
 
 const routes: IRoute[] = [
   //为空时重定位到home
@@ -24,7 +26,7 @@ const routes: IRoute[] = [
       {
         path: 'creator',
         name: 'creator',
-        element: <CreatorCenter />,
+        element: withAuth(<CreatorCenter />), //路由鉴权
       },
       {
         path: 'publishSuccess',
@@ -57,6 +59,11 @@ const routes: IRoute[] = [
     path: '/post/:id',
     name: 'post',
     element: <PostDetail />,
+  },
+  {
+    path: '/agreement',
+    name: 'agreement',
+    element: <Agreement />,
   },
 ]
 

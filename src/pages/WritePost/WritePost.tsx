@@ -16,9 +16,9 @@ import {
 import MarkdownEditor from './MarkdownEditor' // 假设有一个 Markdown 编辑器组件
 import { publishPost } from '@/api/posts' // 导入获取分类和标签的接口方法
 import '@/styles/write-post.less'
-import { Category, TagModal } from '@/types/model'
+import { CategoryType, TagType } from '@/types/model'
 import TagAndCategories from '@/pages/WritePost/TagAndCategories'
-import { useRouter } from '@/utils/router'
+import { navigateTo } from '@/utils/router'
 
 const { Content } = Layout
 
@@ -55,7 +55,6 @@ const WritePost: React.FC = () => {
     window.scrollTo(0, 0)
   }
 
-  const { navigateTo } = useRouter()
   // 提交表单
   const handleSubmit = (values: any) => {
     publishPost({ title, content, selectedCategory, selectedTags })
@@ -126,7 +125,7 @@ const WritePost: React.FC = () => {
             <div className="word">
               <span>字符数: {wordCount.characters}</span>
               <span>行数: {wordCount.lines}</span>
-              <span>正文字数: {wordCount.words}</span>
+              {/*<span>正文字数: {wordCount.words}</span>*/}
             </div>
 
             {/* 同步滚动和回到顶部 */}

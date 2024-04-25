@@ -2,22 +2,21 @@ import React, { useState } from 'react'
 import { Form, Input, Button, Checkbox, message } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import '@/styles/login.less'
-import { User } from '@/types/model'
+import { UserType } from '@/types/model'
 import { login } from '@/api/user'
 import Register from '@/components/Register'
 import { saveStorage } from '@/utils/storage'
 import { ResponseLogin } from '@/types'
 import { LOCAL_STORAGE_NAME } from '@/config'
-import { useRouter } from '@/utils/router'
+
 const Login: React.FC = ({ onCloseModal }: { onCloseModal: () => void }) => {
-  const { navigateTo } = useRouter()
   const [loading, setLoading] = useState(false)
   // 控制当前显示的是登录还是注册
   const [isRegister, setIsRegister] = useState(false)
 
   const handleLogin = async (values: any) => {
     setLoading(true)
-    const { Username, Password }: User = values
+    const { Username, Password }: UserType = values
     try {
       const res = (await login({ Username, Password })) as ResponseLogin
       setLoading(false)

@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Table, Space, Button, Modal, Menu } from 'antd'
 import { fetchUsers } from '@/admin/api/admin'
 import UserForm from '../component/UserForm'
-import { User } from '@/types/model'
+import { UserType } from '@/types/model'
 import { AxiosResponse } from 'axios'
 
 const UserList = () => {
   const [users, setUsers] = useState([])
   const [showUserForm, setShowUserForm] = useState(false)
-  const [userInfor, setUserInfo] = useState<User>({} as User)
+  const [userInfor, setUserInfo] = useState<UserType>({} as UserType)
 
   useEffect(() => {
     fetchUsers()
@@ -25,7 +25,7 @@ const UserList = () => {
       })
   }, [])
   const handleEdit = (userInfor) => {
-    console.log(userInfor)
+    // console.log(userInfor)
     setShowUserForm(true)
     setUserInfo(userInfor)
   }

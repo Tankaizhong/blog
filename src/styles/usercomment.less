@@ -1,0 +1,28 @@
+.user-comment-container {
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  background-color: #fafafa;
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+
+    .ant-avatar {
+      margin-right: 8px;
+    }
+  }
+
+  .like-reply {
+    //align-items: center; // 垂直居中对齐
+    width: 100%; // 确保占据整个空间
+    //position: relative; // 设置相对定位
+    // 调整时间的样式
+    span:last-child {
+      //position: absolute; // 设置绝对定位
+      right: 0; // 将时间移到靠右显示
+    }
+  }
+}

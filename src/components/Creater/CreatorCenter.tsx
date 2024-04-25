@@ -5,9 +5,11 @@ import { getStorage } from '@/utils/storage'
 import { LOCAL_STORAGE_NAME } from '@/config'
 import { useHistory } from 'react-router-dom'
 //使用路由
-import { useRouter } from '@/utils/router'
+
 import { fetchPostList } from '@/api/posts'
 import { fetchCurrentPostList } from '@/api/user'
+
+import { navigateTo } from '@/utils/router'
 
 const { Content } = Layout
 const { Title } = Typography
@@ -31,7 +33,7 @@ const PublishPost = () => {
       console.error('获取用户文章列表失败', error)
     }
   }
-
+  // useTokenCheck();
   useEffect(() => {
     // 在组件加载时调用获取用户文章列表的函数
     fetchUser()
@@ -87,7 +89,7 @@ const PublishPost = () => {
       ),
     },
   ]
-  const { navigateTo } = useRouter()
+
   const [stats, setStats] = useState({
     totalPosts: 0,
     totalViews: 0,
@@ -114,15 +116,6 @@ const PublishPost = () => {
       totalComments,
     }
   }
-  useEffect(() => {
-    // 检查本地 token，这里假设使用 localStorage 存储
-    const token = getStorage(LOCAL_STORAGE_NAME)
-
-    // 如果没有 token，跳转到首页
-    if (!token) {
-      navigateTo('/')
-    }
-  }, [history])
 
   return (
     <Layout className="publish-post-layout">

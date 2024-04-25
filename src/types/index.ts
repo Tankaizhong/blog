@@ -4,6 +4,7 @@ import type { MenuProps, SelectProps } from 'antd'
 export interface IRoute {
   path: string
   name?: string
+  // auth: boolean
   element: React.ReactNode
   // meta: IMeta;
   children?: IRoute[]

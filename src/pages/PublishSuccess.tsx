@@ -3,10 +3,9 @@ import React from 'react'
 import { Result, Button } from 'antd'
 import { SmileOutlined } from '@ant-design/icons'
 import '@/styles/publish-success.less'
-import { useRouter } from '@/utils/router' // 引入样式文件
+import { navigateTo, useRouter } from '@/utils/router' // 引入样式文件
 
 const PublishSuccess = () => {
-  const { navigateTo } = useRouter()
   const goHome = () => {
     navigateTo('/home')
   }

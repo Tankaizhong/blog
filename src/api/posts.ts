@@ -1,7 +1,7 @@
 //生成fetchPostList的api
 
 import service from '@/utils/axios'
-import { Category, PostModel, TagModal } from '@/types/model'
+import { CategoryType, PostType, TagType } from '@/types/model'
 
 export const fetchCategoriesList = () => {
   return service.get('/user/categoriesList')

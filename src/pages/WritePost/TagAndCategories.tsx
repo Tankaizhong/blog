@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Category, TagModal } from '@/types/model'
+import { CategoryType, TagType } from '@/types/model'
 import { Button, message, Select } from 'antd'
 import { fetchCategories, fetchTags } from '@/api/posts'
 import '@/styles/tag-and-categories.less'
 
 const TagAndCategories = ({ onCategoryChange, onTagChange, onSubmit }) => {
-  const [categories, setCategories] = useState<Category[]>([]) // 分类列表
-  const [tags, setTags] = useState<TagModal[]>([]) // 标签列表
+  const [categories, setCategories] = useState<CategoryType[]>([]) // 分类列表
+  const [tags, setTags] = useState<TagType[]>([]) // 标签列表
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]) // 用户选择的分类
   const [selectedTags, setSelectedTags] = useState<string[]>([]) // 用户选择的标签
 
@@ -14,7 +14,7 @@ const TagAndCategories = ({ onCategoryChange, onTagChange, onSubmit }) => {
     // 获取分类列表
     fetchCategories()
       .then((res) => {
-        setCategories(res as Category[])
+        setCategories(res as CategoryType[])
       })
       .catch((error) => {
         console.error('获取分类列表失败', error)
@@ -24,7 +24,7 @@ const TagAndCategories = ({ onCategoryChange, onTagChange, onSubmit }) => {
     // 获取标签列表
     fetchTags()
       .then((res) => {
-        setTags(res as TagModal[])
+        setTags(res as TagType[])
       })
       .catch((error) => {
         console.error('获取标签列表失败', error)

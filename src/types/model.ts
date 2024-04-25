@@ -1,4 +1,4 @@
-export interface User {
+export interface UserType {
   UserID?: number
   UserIP?: string
   Username: string
@@ -13,7 +13,7 @@ export interface User {
   Admin: boolean
 }
 
-export interface PostModel {
+export interface PostType {
   PostID: number
   PostDate: Date
   UserID: number
@@ -36,7 +36,7 @@ export interface CommentType {
   Username?: string
 }
 
-export interface Category {
+export interface CategoryType {
   CategoryID: number
   CategoryName: string
   CategoryAlias: string
@@ -44,19 +44,29 @@ export interface Category {
   ParentCategoryID: number | null
 }
 
-export interface TagModal {
+export interface TagType {
   TagID: number
   TagName: string
   TagAlias: string
   TagDescription: string
 }
 
-export interface PostCategory {
+export interface PostCategoryType {
   PostID: number
   CategoryID: number
 }
 
-export interface PostTag {
+export interface PostTagType {
   PostID: number
   TagID: number
+}
+
+export interface NotificationType {
+  NotificationID: number
+  TargetType: 'Post' | 'Comment'
+  TargetID: number
+  Content: string
+  IsRead: boolean
+  User?: UserType
+  createAt: string
 }
