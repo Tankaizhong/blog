@@ -28,7 +28,6 @@ const Login: React.FC = ({ onCloseModal }: { onCloseModal: () => void }) => {
     } catch (error) {
       console.error('登录失败:', error)
       setLoading(false)
-      message.error('登录失败，请重试')
     }
   }
 

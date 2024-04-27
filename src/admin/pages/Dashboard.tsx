@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Row, Col } from 'antd'
+import { Card, Row, Col, Flex } from 'antd'
 import { fetchBlogStats } from '@/admin/api/admin'
+import CategoryArticleStatistics from '@/admin/component/CategoryArticleStatistics'
+import TopTenVisitedArticles from '@/admin/component/TopTenVisitedArticles'
 
 const Dashboard = () => {
   const [blogStats, setBlogStats] = useState(null)
@@ -8,7 +10,7 @@ const Dashboard = () => {
   useEffect(() => {
     // 在组件加载时获取博客统计信息
     fetchBlogStats().then((data) => {
-      console.log(data)
+      // console.log(data)
       setBlogStats(data)
     })
   }, [])
@@ -30,6 +32,10 @@ const Dashboard = () => {
           <Card title="评论数">{blogStats && blogStats.commentCount}</Card>
         </Col>
       </Row>
+      <Flex gap="middle" horizontal>
+        <CategoryArticleStatistics />
+        <TopTenVisitedArticles />
+      </Flex>
     </div>
   )
 }

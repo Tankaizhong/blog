@@ -10,6 +10,8 @@ import {
   Input,
   Space,
   Statistic,
+  Flex,
+  Badge,
 } from 'antd'
 import { LikeOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons'
 import { addView, fetchPostByPostID } from '@/api/posts'
@@ -29,49 +31,56 @@ const { Title, Text } = Typography
 const { TextArea } = Input
 import ReactMarkdown from 'react-markdown'
 import WebSocketClient from '@/utils/webSocket'
+import { checkToken } from '@/utils/token'
+import moment from 'moment'
+import PostAuthor from '@/pages/Post/PostAuthor'
 
 const PostDetail = () => {
-  const [post, setPost] = useState<PostType | null>(null) // 文章详情
-  const [comments, setComments] = useState<AxiosResponse<CommentType>>() // 文章评论
+  const [post, setPost] = useState<PostType | null>() // 文章详情
+  const [comments, setComments] = useState(null) // 文章评论
   const [commentContent, setCommentContent] = useState('') // 评论内容
   const { id: PostID } = useParams() // 使用 useParams 钩子获取 URL 参数 postId
   const [liked, setLiked] = useState(false)
   const [viewed, setViewed] = useState(false) // 添加一个状态来跟踪是否已经发送了浏览量增加的请求
+  const [isLoggedIn, setIsLoggedIn] = useState(checkToken) // 添加登录状态
+  //作者信息
+  const [author, setAuthor] = useState<UserType>(null)
+
   useEffect(() => {
     if (!viewed) {
       // 如果尚未发送过浏览量增加的请求，则发送请求
       fetchPostByPostID(PostID)
         .then((res: any) => {
           setPost(res)
+          setAuthor(res.author as UserType)
           return addView(PostID) as Promise<any>
         })
         .then((res) => {})
       setViewed(true) // 标记为已发送浏览量增加的请求
-      // console.log(PostID)
       getCommentsByPostID(PostID).then((res) => {
         const processedComments = res?.map((comment) => ({
           ...comment,
           Likes: comment.Likes.length, // 将Likes数组的长度作为点赞数量
-          // User: comment.User.Username // 直接显示User对象中的Username字段
         }))
-        // console.log(res)
         setComments(res as any)
       })
     }
-    fetchLikeStatus(PostID).then((res: any) => {
-      // console.log(res.liked, '1111111111111');
-      setLiked(res.liked)
-    })
+    if (isLoggedIn) {
+      //登陆才检查
+      fetchLikeStatus(PostID).then((res: any) => {
+        setLiked(res.liked)
+      })
+    }
   }, [PostID, liked, viewed]) // 在依赖项中加入 viewed
   const handleCommentChange = (e) => {
     setCommentContent(e.target.value)
   }
 
   //提交评论
+  // 提交评论后处理函数
   const handleSubmitComment = async () => {
     // 提交评论
     const user = getStorage(LOCAL_STORAGE_NAME) as UserType
-    // console.log(commentContent, post?.PostID, user.UserID);
     // 获取当前时间
     const currentDate = new Date()
     // 构建评论对象
@@ -87,13 +96,9 @@ const PostDetail = () => {
 
     await addComments(commentData)
       .then((newComment) => {
-        //redis
-
-        // 添加新评论到评论列表
-        // console.log()
-        setComments((prevComments) => [...prevComments, { ...newComment, User: user }])
+        // 将新评论插入到评论列表的开头
+        setComments((prevComments) => [{ ...newComment, User: user }, ...prevComments])
         // 清空评论内容
-        // console.log(newComment)
         setCommentContent('')
       })
       .catch((error) => {
@@ -104,7 +109,6 @@ const PostDetail = () => {
     setCommentContent('')
   }
 
-  // console.log(post)
   //点赞
   const handleLikeClick = () => {
     if (liked) {
@@ -136,50 +140,74 @@ const PostDetail = () => {
     }
   }
   return (
-    <div>
+    <Flex gap="small" align="center" horizontal="true">
       {post && (
-        <Card>
-          <Title level={2}>{post.Title}</Title>
-          <ReactMarkdown>{post.Content}</ReactMarkdown>
-          <Divider />
-          <Space>
-            <div onClick={handleLikeClick}>
-              <Statistic
-                title="点赞数"
-                value={post.Likes}
-                prefix={<LikeButton handleLiked={setLiked} liked={liked} />}
-              />
+        <Flex vertical align="center" justify="center">
+          <Badge count={post.Likes} style={{ backgroundColor: '#52c41a' }}>
+            {' '}
+            {/* 使用 Badge 显示点赞数 */}
+            <div className="like-button" onClick={handleLikeClick}>
+              {' '}
+              {/* 点击按钮触发点赞操作 */}
+              <LikeButton handleLiked={setLiked} liked={liked} />
             </div>
-            <Statistic title="浏览数" value={post.Views} prefix={<EyeOutlined />} />
-          </Space>
-        </Card>
+          </Badge>
+        </Flex>
       )}
-      <Divider />
-      <Card>
-        <Title level={3}>评论</Title>
-        {comments && comments.length > 0 ? (
-          <List
-            itemLayout="horizontal"
-            dataSource={comments}
-            renderItem={(comment: CommentType) => (
-              <li>
-                <UserComment comment={comment} />
-              </li>
+      <div className="post-detail-content">
+        {post && (
+          <div className="post-content">
+            <h1 className="post-title" level={2}>
+              {post.Title}
+            </h1>
+            {author ? (
+              <div className="post-author-infor">
+                {/* 在此处渲染用户信息 */}
+                <span> {author.Nickname}</span>
+                <span>{moment(post.PostDate).format('YYYY-MM-DD')}</span>
+                <EyeOutlined /> {post.Views}
+              </div>
+            ) : (
+              <p>加载中...</p>
             )}
-          />
-        ) : (
-          <div className="empty-comment-message">暂无评论</div>
+            <Divider />
+            {/*内容*/}
+            <ReactMarkdown>{post.Content}</ReactMarkdown>
+          </div>
         )}
-        <Form.Item>
-          <TextArea rows={4} value={commentContent} onChange={handleCommentChange} />
-        </Form.Item>
-        <Form.Item>
-          <Button htmlType="submit" onClick={handleSubmitComment} type="primary">
-            发表评论
-          </Button>
-        </Form.Item>
-      </Card>
-    </div>
+        {/*<Divider/>*/}
+        <div>
+          <Divider />
+          <Title level={3}>评论 {comments && comments.length}</Title>
+          {comments && comments.length > 0 ? (
+            <List
+              itemLayout="horizontal"
+              dataSource={comments}
+              renderItem={(comment: CommentType) => (
+                <li>
+                  <UserComment comment={comment} />
+                </li>
+              )}
+            />
+          ) : (
+            <div className="empty-comment-message">暂无评论</div>
+          )}
+          <Form.Item>
+            <TextArea rows={4} value={commentContent} onChange={handleCommentChange} />
+          </Form.Item>
+          <Form.Item>
+            {isLoggedIn ? (
+              <Button type="primary" onClick={handleSubmitComment}>
+                提交评论
+              </Button>
+            ) : (
+              <Button danger>请先登录后再评论</Button>
+            )}
+          </Form.Item>
+        </div>
+      </div>
+      <PostAuthor />
+    </Flex>
   )
 }
 

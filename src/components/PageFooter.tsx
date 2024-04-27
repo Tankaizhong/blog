@@ -19,7 +19,7 @@ const PageFooter: React.FC = () => {
           </ul>
         </div>
         <div className="footer-info">
-          <p>公司地址：大连市甘井子区大连大学</p>
+          <p>地址：大连市甘井子区大连大学</p>
           <p>联系电话：159-7734-1356</p>
           <p>电子邮件：2534658839@qq.com</p>
         </div>

@@ -4,6 +4,7 @@ import { fetchUsers } from '@/admin/api/admin'
 import UserForm from '../component/UserForm'
 import { UserType } from '@/types/model'
 import { AxiosResponse } from 'axios'
+import moment from 'moment'
 
 const UserList = () => {
   const [users, setUsers] = useState([])
@@ -17,6 +18,7 @@ const UserList = () => {
         const usersWithKeys = response.map((user) => ({
           ...user,
           key: user.UserID, // 使用 UserID 作为唯一键
+          LastLoginTime: moment(user.LastLoginTime).format('YYYY 年 MM 月 DD 日 HH:mm'), // 格式化最后登录时间
         }))
         setUsers(usersWithKeys)
       })
@@ -41,12 +43,12 @@ const UserList = () => {
       key: 'Username',
     },
     {
-      title: '登陆次数',
+      title: '登录次数',
       dataIndex: 'LoginCount',
       key: 'LoginCount',
     },
     {
-      title: '最后登陆时间',
+      title: '最后登录时间',
       dataIndex: 'LastLoginTime',
       key: 'LastLoginTime',
     },
@@ -65,12 +67,7 @@ const UserList = () => {
     <>
       <div style={{ display: 'flex' }}>
         {/*左上添加用户*/}
-        <Menu mode="vertical" style={{ marginRight: '20px' }}>
-          <Menu.Item key="1" onClick={() => setShowUserForm(true)}>
-            添加用户
-          </Menu.Item>
-          {/* 其他菜单项 */}
-        </Menu>
+        <Button onClick={() => setShowUserForm(true)}>添加用户</Button>
         <Modal
           title={userInfor.hasOwnProperty('UserID') ? '编辑用户' : '添加用户'}
           open={showUserForm}

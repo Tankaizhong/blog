@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import '../../styles/home.less'
 import Header from '@/components/Home/Header/Header'
-import { Layout, theme, Menu } from 'antd'
+import { Layout, theme, Menu, Flex } from 'antd'
 import type { MenuProps } from 'antd'
 import type { CategoryType } from '@/types/model'
 import { fetchCategoriesList, fetchPostByCategory } from '@/api/posts'
@@ -12,6 +12,7 @@ import { Outlet, Route, useNavigate } from 'react-router-dom'
 import { register } from '@/api/user'
 import { ADMIN } from '@/config'
 import { getUserInfo } from '@/admin/api/admin'
+import LeftContent from '@/pages/Home/RightContent'
 
 const { Content, Footer, Sider } = Layout
 
@@ -60,8 +61,6 @@ const Home: React.FC = () => {
     fetchCategories().then((res) => {
       // console.log("ok")
     })
-    // navigateTo(`/home/all/`)
-    //查询是否有超级管理员,否则发起创建
     checkSuperAdmin()
       .then((res) => {
         // console.log(res)
@@ -79,7 +78,7 @@ const Home: React.FC = () => {
     <div className="home">
       <Header />
       <div className="Contain">
-        <Layout>
+        <Flex justify="space-around" gap="small" align="start" horizontal="true">
           <div className="home-sider">
             <Sider>
               <Menu
@@ -93,7 +92,8 @@ const Home: React.FC = () => {
             {/*<HomeContent sharedState={sharedState} setSharedState={setSharedState} />*/}
             <Outlet />
           </div>
-        </Layout>
+          <LeftContent />
+        </Flex>
       </div>
       {/*页脚*/}
       <PageFooter />

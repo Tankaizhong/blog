@@ -64,10 +64,10 @@ const UserComment = ({ comment }) => {
         <LikeButton handleLiked={handleLiked} liked={liked} />
         <span>{likeCount}</span>
         <span>
-          <MessageOutlined style={{ marginRight: '4px' }} />
-          回复
+          {/*<MessageOutlined style={{ marginRight: '4px' }} />*/}
+          {/*回复*/}
         </span>
-        <span>{moment(CommentDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+        <span>{moment(CommentDate).format('YYYY 年MM 月 DD HH:mm:ss')}</span>
       </Space>
     </div>
   )

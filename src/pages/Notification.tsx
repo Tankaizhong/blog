@@ -34,14 +34,15 @@ const NotificationComponent = () => {
   }
 
   // 标记通知为已读
-  const markAsRead = async (notification) => {
-    console.log(notification.NotificationID)
+  const markAsRead = async (notification: NotificationType) => {
     try {
       // await axios.post(`/api/`);
-      await markNotificationRead(notification.NotificationID)
-      setNotifications((prevNotifications: any) =>
-        prevNotifications.map((n) => (n.id === notification.id ? { ...n, isRead: true } : n))
-      )
+      if (!notification.IsRead) {
+        await markNotificationRead(notification.NotificationID)
+        setNotifications((prevNotifications: any) =>
+          prevNotifications.map((n) => (n.id === notification.id ? { ...n, isRead: true } : n))
+        )
+      }
     } catch (error) {
       console.error('Error marking notification as read:', error)
     }

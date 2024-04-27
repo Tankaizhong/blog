@@ -3,7 +3,7 @@ import { Card, Avatar, Typography, Button } from 'antd'
 import { LikeOutlined } from '@ant-design/icons'
 import { navigateTo } from '@/utils/router'
 
-const LikeCard = () => {
+const UserLikeCard = () => {
   const handleClick = () => {
     // 在点击事件处理程序中进行页面导航
     navigateTo('/account/notifications')
@@ -12,10 +12,10 @@ const LikeCard = () => {
   return (
     <div className="like-content">
       <Button type="text" onClick={handleClick} target="/account/notifications">
-        点赞
+        点赞管理
       </Button>
     </div>
   )
 }
 
-export default LikeCard
+export default UserLikeCard

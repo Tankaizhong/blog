@@ -8,7 +8,7 @@ export const fetchCategoriesList = () => {
 }
 //获取文章
 export const fetchPostList = (CategoryID) => {
-  return service.post('/posts/getTopPost', { CategoryID })
+  return service.post('/posts/getPostByCategoryID', { CategoryID })
 }
 //获取指定文章
 export const fetchPostByPostID = (postId) => {
@@ -19,21 +19,19 @@ export const fetchPostByPostID = (postId) => {
 export const addView = (PostID: number) => {
   return service.post(`/posts/view`, { PostID })
 }
-//
+//抓取分类
 export const fetchCategories = (PostID: number) => {
   return service.get(`/posts/fetchCategories`)
 }
 
 //发布文章
 export const publishPost = (data) => {
-  // console.log(data)
   const post = {
     Content: data.content,
     Title: data.title,
     TagName: data.selectedTags,
     CategoryName: data.selectedCategory,
   }
-  console.log(post)
   return service.post(`/posts/publish`, post)
 }
 
@@ -43,4 +41,22 @@ export const fetchPostByCategory = (CategoryID) => {
 }
 export const fetchTags = (PostID: number) => {
   return service.get(`/posts/fetchTags`)
+}
+
+//用户搜索
+export const fetchPostByQuery = (Query: string) => {
+  // console.log(Query)
+  return service.post(`/posts/search`, { Query })
+}
+
+//热门文章
+export const fetchHotPost = () => {
+  // console.log(Query)
+  return service.post(`/posts/fetchTopPost`)
+}
+
+//删除文章
+export const deletePostByPostID = (PostID: number) => {
+  console.log(PostID)
+  return service.post(`/posts/deletePost`, { PostID })
 }

@@ -39,9 +39,7 @@ function menuNav(props) {
         defaultSelectedKeys={['1']}
         defaultOpenKeys={['sub1']}
         mode="horizontal"
-        items={navItems.map((item) =>
-          getItem(item.label, item.key, item.icon, item.children, item.type)
-        )}
+        items={navItems.map((item) => getItem(item.label, item.key, item.icon, item.type))}
       />
     </>
   )

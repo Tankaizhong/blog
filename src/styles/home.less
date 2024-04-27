@@ -1,4 +1,5 @@
-@slider: 20px 10px 10px 10px; // 设置 @slider 变量为 20px 10px 10px 10px;
+@slider: 20px 10px; // 设置 @slider 变量为 20px 10px 10px 10px;
+@menuWidth: 400px; // 设置 @menuWidth 变量为 200px;
 .Contain {
   background-color: rgb(242, 243, 245);
 }
@@ -11,13 +12,6 @@
 
 .home-sider {
   margin: @slider;
-  width: 400px;
-  display: inline-block;
-  .ant-layout-sider {
-    display: inline-block;
-    width: 200px;
-    margin-left: 70px;
-  }
 }
 
 .MenuContent {
@@ -25,7 +19,6 @@
 }
 
 .home-content {
-  width: 100%;
+  width: 50%;
   margin: @slider;
-  //background-color: red;
 }

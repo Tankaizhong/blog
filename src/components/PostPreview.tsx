@@ -22,33 +22,26 @@ const PostPreview = (data) => {
   return (
     <div className="post-preview" onClick={(e) => handleClick(e)}>
       <span className="post-title">{Title}</span>
-      <div className="ant-card-body">
-        <div className="post-info">
-          <div className="post-content">
-            <Text type="secondary" style={{ ...TextStyle, fontWeight: '600' }}>
-              <ReactMarkdown>truncateContent(Content)</ReactMarkdown>
-            </Text>
-          </div>
-          <div className="post-meta">
-            <Text type="secondary" className="post-infor">
-              <span>作者: {User.Nickname}</span>
-              <span>
-                <EyeOutlined /> {Views}{' '}
-              </span>
-
-              <span>
-                <LikeOutlined /> {Likes.length}
-              </span>
-            </Text>
-            <span className="post-tags">
-              {Tags.map((tag: TagType, index) => (
-                <Tag style={TextStyle} key={index}>
-                  {tag.TagName}
-                </Tag>
-              ))}
-            </span>
-          </div>
+      <div className="post-content" style={{ ...TextStyle, fontWeight: '400' }}>
+        <ReactMarkdown>{truncateContent(Content)}</ReactMarkdown>
+      </div>
+      <div className="post-meta">
+        <div className="post-infor">
+          <span>作者: {User.Nickname}</span>
+          <span>
+            <EyeOutlined /> {Views}
+          </span>
+          <span>
+            <LikeOutlined /> {Likes.length}
+          </span>
         </div>
+        <span className="post-tags">
+          {Tags.map((tag: TagType, index) => (
+            <Tag style={TextStyle} key={index}>
+              {tag.TagName}
+            </Tag>
+          ))}
+        </span>
       </div>
     </div>
   )

@@ -23,3 +23,7 @@ export const checkAdminAPI = () => {
 export const fetchBlogStats = () => {
   return service.get('/admin/fetchBlogStats')
 }
+//获取所有文章按分类
+export const fetchAllPostGroupByCategory = () => {
+  return service.get(`/admin/fetchAllPostGroupByCategory`)
+}

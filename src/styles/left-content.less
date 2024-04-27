@@ -1,0 +1,68 @@
+@import 'home';
+
+.left-content {
+  background-color: #ffffff;
+  width: 30%;
+  margin: @slider;
+
+  .left-content-tittle {
+    font-size: 20px;
+    font-weight: 630;
+    padding: 10px 30px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .hot-post-list {
+    li {
+      list-style-type: none;
+
+      span {
+        display: inline-block; /* 在一行内显示，允许设置宽度 */
+        max-width: 70%; /* 限制内容宽度不超过父元素宽度 */
+        white-space: nowrap; /* 不换行 */
+        overflow: hidden; /* 隐藏超出部分 */
+        text-overflow: ellipsis; /* 显示省略号 */
+      }
+
+      a {
+        text-decoration: none; /* 去除下划线 */
+        display: flex; /* 使用 Flex 布局 */
+        align-items: center; /* 在垂直方向上居中 */
+
+        color: inherit; /* 继承父元素的文本颜色 */
+
+        span {
+          color: black;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .rank {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    margin-right: 10px;
+  }
+
+  .rank-1 {
+    background: linear-gradient(to right, red, yellow);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .rank-2 {
+    background: linear-gradient(to right, orange, yellow);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .rank-3 {
+    background: linear-gradient(to right, yellow, green);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

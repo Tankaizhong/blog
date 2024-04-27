@@ -15,8 +15,8 @@ const Header = () => {
     navigateTo('/home/creator')
   }
   return (
-    <div className="headerContent">
-      <Flex justify="space-between" gap="small" align="center">
+    <div className="header-content">
+      <Flex justify="space-around" gap="small" align="center">
         <div className="logo">
           <h3>BOLG</h3>
         </div>
