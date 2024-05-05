@@ -8,11 +8,10 @@ import type { CategoryType } from '@/types/model'
 import { fetchCategoriesList, fetchPostByCategory } from '@/api/posts'
 import PageFooter from '@/components/PageFooter'
 import { Outlet, Route, useNavigate } from 'react-router-dom'
-
 import { register } from '@/api/user'
 import { ADMIN } from '@/config'
 import { getUserInfo } from '@/admin/api/admin'
-import LeftContent from '@/pages/Home/RightContent'
+import RightContent from '@/pages/Home/RightContent'
 
 const { Content, Footer, Sider } = Layout
 
@@ -71,9 +70,12 @@ const Home: React.FC = () => {
   }, []) // 第二个参数为依赖数组，表示仅在组件挂载时执行一次
   const navigate = useNavigate()
   const handleMenuClick = (e: MenuProps['onClick']) => {
+    console.log(e.key)
     setSharedState(e.key)
+
     navigate(`/home/all/${e.key}`)
   }
+
   return (
     <div className="home">
       <Header />
@@ -85,6 +87,7 @@ const Home: React.FC = () => {
                 mode="inline"
                 onClick={handleMenuClick} // 添加点击事件处理函数
                 items={categories}
+                defaultSelectedKeys={categories.length > 0 ? categories[0].key : []} // 设置默认选中项的 key
               />
             </Sider>
           </div>
@@ -92,7 +95,7 @@ const Home: React.FC = () => {
             {/*<HomeContent sharedState={sharedState} setSharedState={setSharedState} />*/}
             <Outlet />
           </div>
-          <LeftContent />
+          <RightContent />
         </Flex>
       </div>
       {/*页脚*/}

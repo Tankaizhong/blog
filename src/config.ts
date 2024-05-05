@@ -5,3 +5,4 @@ export const ADMIN = {
   NAME: 'root',
   PASSWORD: '123456',
 }
+export const OPENAI_API_KEY = your_api_key_here

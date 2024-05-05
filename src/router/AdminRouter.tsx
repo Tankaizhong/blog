@@ -7,10 +7,12 @@ import Dashboard from '@/admin/pages/Dashboard'
 import TagManager from '@/admin/pages/TagManager'
 import CategoryManager from '@/admin/pages/CategoryManager'
 import CommentManager from '@/admin/pages/CommentManager'
+import { withAdminAuth } from '@/HOC/withAuth'
+import PostManager from '@/admin/pages/PostManager'
 const routes: IRoute[] = [
   {
     path: '/admin',
-    element: <AdminHome />,
+    element: withAdminAuth(<AdminHome />),
     children: [
       {
         path: 'users',
@@ -31,6 +33,10 @@ const routes: IRoute[] = [
       {
         path: 'CommentManager',
         element: <CommentManager />,
+      },
+      {
+        path: 'PostManager',
+        element: <PostManager />,
       },
     ],
   },

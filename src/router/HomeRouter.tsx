@@ -11,6 +11,7 @@ import PostDetail from '@/pages/Post/PostDetail'
 import PublishSuccess from '@/pages/PublishSuccess'
 import Agreement from '@/pages/Agreement'
 import { withAuth } from '@/HOC/withAuth'
+import UserRankings from '@/pages/UserRankings'
 
 const routes: IRoute[] = [
   //为空时重定位到home
@@ -55,8 +56,14 @@ const routes: IRoute[] = [
     name: 'draft',
     element: <WritePost />,
   },
+  //用户排行
   {
-    path: '/post/:id',
+    path: '/user/all',
+    name: 'user',
+    element: <UserRankings />,
+  },
+  {
+    path: '/post/:PostID',
     name: 'post',
     element: <PostDetail />,
   },

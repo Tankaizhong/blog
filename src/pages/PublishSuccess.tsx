@@ -7,7 +7,7 @@ import { navigateTo, useRouter } from '@/utils/router' // 引入样式文件
 
 const PublishSuccess = () => {
   const goHome = () => {
-    navigateTo('/home')
+    navigateTo('/home/all')
   }
   return (
     <div className="publish-success-container">

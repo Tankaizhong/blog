@@ -13,7 +13,7 @@ const NotFound = () => {
         subTitle="抱歉，页面不存在"
         extra={
           <Button type="primary">
-            <Link to="/home">返回首页</Link>
+            <Link to="/home/all">返回首页</Link>
           </Button>
         }
       />

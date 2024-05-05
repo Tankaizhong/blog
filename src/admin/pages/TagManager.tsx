@@ -104,6 +104,13 @@ const TagManager: React.FC = () => {
       title: '标签名',
       dataIndex: 'TagName',
       key: 'TagName',
+      render: (tags: string[]) => (
+        <span>
+          <Tag color={'green'} key={tags}>
+            {tags}
+          </Tag>
+        </span>
+      ),
     },
     {
       title: '标签别名',
@@ -125,8 +132,14 @@ const TagManager: React.FC = () => {
         </Space>
       ),
     },
+    // {
+    //     title: 'Tags',
+    //     key: 'tags',
+    //     dataIndex: 'tags',
+    //
+    // },
   ]
-  // console.log(editingTag)
+
   return (
     <div className="tag-manager">
       <Button
@@ -167,7 +180,14 @@ const TagManager: React.FC = () => {
         </Form>
       </Modal>
       <div className="tags-list">
-        <Table columns={columns} dataSource={tags} rowKey="TagID" />
+        <Table
+          columns={columns.map((column) => ({
+            ...column,
+            align: 'center',
+          }))}
+          dataSource={tags}
+          rowKey="TagID"
+        />
       </div>
     </div>
   )

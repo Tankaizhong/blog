@@ -1,0 +1,23 @@
+{
+  "D:\\User\\GP\\blogo\\src\\Button.jsx": {
+    "path": "D:\\User\\GP\\blogo\\src\\Button.jsx",
+    "statementMap": {
+      "0": { "start": { "line": 3, "column": 15 }, "end": { "line": 15, "column": 1 } },
+      "1": { "start": { "line": 4, "column": 2 }, "end": { "line": 14, "column": 4 } }
+    },
+    "fnMap": {
+      "0": {
+        "name": "(anonymous_0)",
+        "decl": { "start": { "line": 3, "column": 15 }, "end": { "line": 3, "column": 16 } },
+        "loc": { "start": { "line": 3, "column": 76 }, "end": { "line": 15, "column": 1 } },
+        "line": 3
+      }
+    },
+    "branchMap": {},
+    "s": { "0": 1, "1": 11 },
+    "f": { "0": 11 },
+    "b": {},
+    "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    "hash": "ac5e1dae860eddc86f92a96ae8b8e3f6f7167d0b"
+  }
+}

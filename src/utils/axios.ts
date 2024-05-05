@@ -12,14 +12,41 @@ const service = axios.create({
 })
 
 let timer
+const routesRequiringToken = [
+  '/user/postList',
+  '/user/updateUserInfor',
+  '/user/uploadAvatar',
+  '/posts/publish',
+  '/posts/update',
+  '/posts/like',
+  '/posts/find',
+  '/posts/deletePost',
+  '/like',
+]
+// 自定义的匹配函数，用于模糊匹配路径
+const fuzzyMatch = (path, pattern) => {
+  // 使用正则表达式来进行模糊匹配
+  const regex = new RegExp(pattern.replace(/\//g, '\\/').replace(/\*/g, '.*'))
+  return regex.test(path)
+}
 
-// 拦截请求
+// 请求拦截
 service.interceptors.request.use(
   (config) => {
     const token = getToken()
-    // console.log(config.headers)
+    // 检查是否需要 token 的路径模糊匹配
+    const needsToken = routesRequiringToken.some((pattern) => fuzzyMatch(config.url, pattern))
+    // if (needsToken && !token) {
+    //     // 这里你可以根据实际需求选择抛出错误或者重定向到登录页面
+    //     // 抛出错误
+    //     message.error('请先登录');
+    //     return Promise.reject('请先登录');
+    //     // 或者重定向到登录页面
+    //     // window.location.href = '/login';
+    // }
+
     if (token) {
-      config.headers['Authorization'] = token
+      config.headers['Authorization'] = token // 如果需要 token 并且存在 token，则在请求头中添加 Authorization 字段
     }
     return config
   },
@@ -29,7 +56,7 @@ service.interceptors.request.use(
   }
 )
 
-// 拦截响应
+// 响应拦截
 service.interceptors.response.use(
   (response) => {
     // Any status code that lie within the range of 2xx cause this function to trigger

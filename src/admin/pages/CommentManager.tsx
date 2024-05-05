@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Typography, Divider, Table, Button, message } from 'antd'
+import { Typography, Divider, Table, Button, message, Modal } from 'antd'
 import { CommentType } from '@/types/model'
 import { getAllComments, deleteComment } from '@/api/comment'
 import '../style/CommentManager.less'
+import { showConfirm } from '@/utils/button'
 
+const { confirm } = Modal
 const { Text } = Typography
 
 const CommentManager: React.FC = () => {
@@ -51,12 +53,17 @@ const CommentManager: React.FC = () => {
       title: '内容',
       dataIndex: 'Content',
       key: 'Content',
+      ellipsis: true, // 添加 ellipsis 属性
     },
     {
       title: '操作',
       key: 'action',
       render: (text: any, record: CommentType) => (
-        <Button type="primary" danger onClick={() => handleDelete(record.CommentID)}>
+        <Button
+          type="primary"
+          danger
+          onClick={() => showConfirm(() => handleDelete(record?.CommentID as number))}
+        >
           删除
         </Button>
       ),
@@ -66,7 +73,14 @@ const CommentManager: React.FC = () => {
   return (
     <div>
       <Divider orientation="left">评论管理</Divider>
-      <Table columns={columns} dataSource={comments} rowKey="CommentID" />
+      <Table
+        columns={columns.map((column) => ({
+          ...column,
+          align: 'center',
+        }))}
+        dataSource={comments}
+        rowKey="CommentID"
+      />
     </div>
   )
 }

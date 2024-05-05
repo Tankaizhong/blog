@@ -13,10 +13,11 @@ const LikeButton = ({ handleLiked, liked }) => {
   }
 
   return (
-    <animated.div style={springProps} onClick={handleLike} className={liked ? 'liked' : ''}>
-      <LikeOutlined style={{ fontSize: '24px', color: liked ? '#1e80ff' : 'black' }} />
-      {/*Like*/}
-    </animated.div>
+    <div>
+      <animated.div style={springProps} onClick={handleLike} className={liked ? 'liked' : ''}>
+        <LikeOutlined style={{ fontSize: '14px', color: liked ? '#1e80ff' : '#8a919f' }} />
+      </animated.div>
+    </div>
   )
 }
 

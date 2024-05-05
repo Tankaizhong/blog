@@ -1,26 +1,31 @@
 .user-comment-container {
-  margin-bottom: 10px;
-  padding: 16px;
-  border: 1px solid #e8e8e8;
-  border-radius: 4px;
-  background-color: #fafafa;
+  display: flex;
+  align-items: flex-end;
+  .user-avatar {
+    margin-right: 10px; /* 为了头像和其他内容之间添加一些间距 */
+    align-self: flex-start; /* 将 .user-avatar 单独对齐到底部 */
+  }
 
-  .user-info {
+  .user-info-and-content {
+    flex: 1;
     display: flex;
-    align-items: center;
-    .ant-avatar {
-      margin-right: 8px;
-    }
+    flex-direction: column;
+  }
+
+  .user-name {
+    color: #333;
+    font-size: 16px;
+  }
+
+  .user-comment-content {
+    font-size: 16px;
+    color: #252933;
   }
 
   .like-reply {
-    //align-items: center; // 垂直居中对齐
-    width: 100%; // 确保占据整个空间
-    //position: relative; // 设置相对定位
-    // 调整时间的样式
-    span:last-child {
-      //position: absolute; // 设置绝对定位
-      right: 0; // 将时间移到靠右显示
-    }
+    height: 40px;
+    display: flex;
+    align-items: center;
+    color: #8a919f;
   }
 }

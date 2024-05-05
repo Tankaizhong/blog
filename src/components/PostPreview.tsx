@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Space, Tag, Typography } from 'antd'
+import { Card, Flex, Space, Tag, Typography } from 'antd'
 import '@/styles/post-preview.less'
 import { EyeOutlined, LikeOutlined } from '@ant-design/icons'
 import { TagType, UserType } from '@/types/model'
@@ -28,6 +28,7 @@ const PostPreview = (data) => {
       <div className="post-meta">
         <div className="post-infor">
           <span>作者: {User.Nickname}</span>
+          <span>|</span>
           <span>
             <EyeOutlined /> {Views}
           </span>

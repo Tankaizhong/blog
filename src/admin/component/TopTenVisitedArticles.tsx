@@ -1,7 +1,7 @@
 import React from 'react'
-
+import '../style/TopTenVisitedArticles.less'
 const TopTenVisitedArticles = () => {
-  return <div>111111111111111111111</div>
+  return <div className="TopTenVisitedArticles-content"></div>
 }
 
 export default TopTenVisitedArticles

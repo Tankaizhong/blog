@@ -28,9 +28,6 @@ const UserCard = () => {
   const handleAccountSetting = () => {
     navigateTo('/account/settings')
   }
-  const handleNotification = () => {
-    navigateTo('/account/notifications')
-  }
 
   const [username, setUsername] = useState('')
   const [userInfo, setUserInfo] = useState<UserType>(null)
@@ -52,10 +49,6 @@ const UserCard = () => {
       </Button>
       <Button className="write-article-btn" type="primary" onClick={handleAccountSetting}>
         账号设置
-      </Button>
-
-      <Button className="write-article-btn" type="primary" onClick={handleNotification}>
-        点赞通知
       </Button>
 
       <LogoutButton />

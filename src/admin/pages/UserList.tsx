@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Table, Space, Button, Modal, Menu } from 'antd'
-import { fetchUsers } from '@/admin/api/admin'
+import { Table, Space, Button, Modal, Menu, Badge, message } from 'antd'
+import { banUser, fetchUsers } from '@/admin/api/admin'
 import UserForm from '../component/UserForm'
 import { UserType } from '@/types/model'
 import { AxiosResponse } from 'axios'
 import moment from 'moment'
+import { deleteUser } from '@/api/user'
+import { showConfirm } from '@/utils/button'
+import { exportToExcel } from '@/utils/excel'
+import { fetchAndSetUsers } from '@/utils/user'
 
 const UserList = () => {
   const [users, setUsers] = useState([])
@@ -12,15 +16,9 @@ const UserList = () => {
   const [userInfor, setUserInfo] = useState<UserType>({} as UserType)
 
   useEffect(() => {
-    fetchUsers()
-      .then((response) => {
-        // console.log(response,'111111111111')
-        const usersWithKeys = response.map((user) => ({
-          ...user,
-          key: user.UserID, // 使用 UserID 作为唯一键
-          LastLoginTime: moment(user.LastLoginTime).format('YYYY 年 MM 月 DD 日 HH:mm'), // 格式化最后登录时间
-        }))
-        setUsers(usersWithKeys)
+    fetchAndSetUsers()
+      .then((users) => {
+        setUsers(users as any)
       })
       .catch((error) => {
         console.error('Error fetching users:', error)
@@ -31,12 +29,34 @@ const UserList = () => {
     setShowUserForm(true)
     setUserInfo(userInfor)
   }
+  const handleDelete = async (userInfor) => {
+    await deleteUser(userInfor.UserID).then((res: AxiosResponse) => {
+      if (res.success) {
+        message.success('删除成功')
+        fetchAndSetUsers()
+          .then((users) => {
+            setUsers(users as any)
+          })
+          .catch((error) => {
+            console.error('Error fetching users:', error)
+          })
+      }
+    })
+  }
+
+  const handleBan = (record: UserType) => {
+    banUser(record.UserID)
+      .then((res) => {
+        message.success(res.message)
+        fetchAndSetUsers().then((users) => {
+          setUsers(users as any)
+        })
+      })
+      .catch((error) => {
+        console.error('封禁用户失败:', error)
+      })
+  }
   const columns = [
-    {
-      title: 'ID',
-      dataIndex: 'UserID',
-      key: 'id',
-    },
     {
       title: '用户名',
       dataIndex: 'Username',
@@ -48,6 +68,16 @@ const UserList = () => {
       key: 'LoginCount',
     },
     {
+      title: 'Status',
+      key: 'Status',
+      render: (text, record: UserType) => (
+        <Badge
+          status={record.Status === 'active' ? 'success' : 'error'}
+          text={record.Status === 'active' ? '正常' : '异常'}
+        />
+      ),
+    },
+    {
       title: '最后登录时间',
       dataIndex: 'LastLoginTime',
       key: 'LastLoginTime',
@@ -55,14 +85,32 @@ const UserList = () => {
     {
       title: '操作',
       key: 'action',
-      render: (text, record) => (
+      render: (text, record: UserType) => (
         <Space size="middle">
-          <a onClick={() => handleEdit(record)}>Edit</a>
-          <a>Delete</a>
+          <a style={{ color: '#468dc8' }} onClick={() => handleEdit(record)}>
+            编辑
+          </a>
+          <a style={{ color: 'red' }} onClick={() => showConfirm(() => handleDelete(record))}>
+            删除
+          </a>
+          {record.Status === 'active' ? (
+            <a style={{ color: 'red' }} onClick={() => showConfirm(() => handleBan(record))}>
+              封禁
+            </a>
+          ) : (
+            <a style={{ color: 'green' }} onClick={() => showConfirm(() => handleBan(record))}>
+              解封
+            </a>
+          )}
         </Space>
       ),
     },
   ]
+  const handleExport = () => {
+    const { PassWord, ...data } = users
+    console.log(users, columns)
+    exportToExcel(columns, users, 'users.xlsx')
+  }
   return (
     <>
       <div style={{ display: 'flex' }}>
@@ -76,8 +124,16 @@ const UserList = () => {
         >
           <UserForm userInfor={userInfor} onClose={() => setShowUserForm(false)} />
         </Modal>
+        <Button onClick={handleExport}>导出为 Excel</Button>
       </div>
-      <Table columns={columns} dataSource={users} />
+      <Table
+        columns={columns.map((column) => ({
+          ...column,
+          align: 'center',
+        }))}
+        dataSource={users}
+        rowKey="UserID"
+      />
     </>
   )
 }

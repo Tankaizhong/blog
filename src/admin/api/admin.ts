@@ -27,3 +27,8 @@ export const fetchBlogStats = () => {
 export const fetchAllPostGroupByCategory = () => {
   return service.get(`/admin/fetchAllPostGroupByCategory`)
 }
+
+//封禁用户
+export const banUser = (UserID) => {
+  return service.get(`/admin/banUser?UserID=${UserID}`)
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Input, Button, Checkbox, message } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import '@/styles/login.less'
@@ -14,6 +14,8 @@ const Login: React.FC = ({ onCloseModal }: { onCloseModal: () => void }) => {
   // 控制当前显示的是登录还是注册
   const [isRegister, setIsRegister] = useState(false)
 
+  useEffect(() => {}, [isRegister])
+
   const handleLogin = async (values: any) => {
     setLoading(true)
     const { Username, Password }: UserType = values
@@ -21,9 +23,6 @@ const Login: React.FC = ({ onCloseModal }: { onCloseModal: () => void }) => {
       const res = (await login({ Username, Password })) as ResponseLogin
       setLoading(false)
       saveStorage(LOCAL_STORAGE_NAME, res.result)
-      message.success('登录成功')
-      // 刷新页面
-      window.location.reload()
       onCloseModal()
     } catch (error) {
       console.error('登录失败:', error)
@@ -32,9 +31,8 @@ const Login: React.FC = ({ onCloseModal }: { onCloseModal: () => void }) => {
   }
 
   const handleRegister = async (values: any) => {
-    // 在这里处理注册逻辑
-    console.log('接收到注册值:', values)
-    // 注册成功后可以进行其他操作，例如关闭注册表单
+    setLoading(true)
+
     setIsRegister(false)
   }
 

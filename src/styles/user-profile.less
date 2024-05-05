@@ -1,46 +1,27 @@
 .user-profile-edit-container {
-  max-width: 600px;
+  max-width: 60%;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 40px;
+  //background: linear-gradient(to bottom, #f0f0f0, #ffffff); /* 渐变色背景 */
 
-  .ant-form-item {
-    margin-bottom: 20px;
-    width: calc(50% - 20px); // 计算表单项的宽度
-    box-sizing: border-box;
-    float: left;
-    border: 1px solid #d9d9d9;
-    padding: 10px;
-    border-radius: 5px;
+  .avatar-content {
+    display: flex;
+    align-items: center;
+    height: 150px;
+    justify-items: center;
+    .avatar-preview {
+      display: block;
+      width: 100px;
+      height: 100px;
+      background-color: chocolate;
+      border-radius: 50%;
+    }
   }
-
-  .avatar-preview {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    //margin-bottom: 20px;
-    border-radius: 50%;
-    display: block;
-    margin: 0 auto 20px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  .ant-form-item-label {
-    width: 100px;
-    text-align: right;
-    padding-right: 10px;
-  }
-
-  .ant-input {
-    border-radius: 5px;
-    width: calc(100% - 22px); // 调整输入框宽度，考虑到边框宽度
-  }
-
-  .ant-btn {
+  .content {
     width: 100%;
-  }
-
-  .ant-form-item-control {
-    display: inline-block;
-    //margin-left: 100px;
+    height: 50%;
+    background-color: #fff;
+    display: block;
+    padding: 20px;
   }
 }

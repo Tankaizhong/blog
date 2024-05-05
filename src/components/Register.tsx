@@ -16,7 +16,7 @@ const Register: React.FC = ({ onSuccess }) => {
       return
     }
     const result = await register(values as UserType).then((res) => {
-      console.log('注册成功:', res)
+      message.success('注册成功')
       onSuccess() // 调用注册成功的回调函数
     })
   }

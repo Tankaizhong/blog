@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Row, Col, Flex } from 'antd'
+import { Card, Row, Col, Flex, Divider } from 'antd'
 import { fetchBlogStats } from '@/admin/api/admin'
 import CategoryArticleStatistics from '@/admin/component/CategoryArticleStatistics'
 import TopTenVisitedArticles from '@/admin/component/TopTenVisitedArticles'
+import '../style/Dashboard.less'
+import StatsRow from '@/admin/component/HighlightedStatCard'
 
 const Dashboard = () => {
   const [blogStats, setBlogStats] = useState(null)
@@ -16,23 +18,10 @@ const Dashboard = () => {
   }, [])
 
   return (
-    <div>
-      <h1>后台首页</h1>
-      <Row gutter={[16, 16]}>
-        <Col span={6}>
-          <Card title="文章数">{blogStats && blogStats.postCount}</Card>
-        </Col>
-        <Col span={6}>
-          <Card title="浏览量">{blogStats && blogStats.totalViews}</Card>
-        </Col>
-        <Col span={6}>
-          <Card title="用户数">{blogStats && blogStats.userCount}</Card>
-        </Col>
-        <Col span={6}>
-          <Card title="评论数">{blogStats && blogStats.commentCount}</Card>
-        </Col>
-      </Row>
-      <Flex gap="middle" horizontal>
+    <div className="dashboard-content">
+      {blogStats ? <StatsRow stats={blogStats} /> : <p>Loading......</p>}
+      {/*分割线*/}
+      <Flex gap="middle" direction="horizontal">
         <CategoryArticleStatistics />
         <TopTenVisitedArticles />
       </Flex>

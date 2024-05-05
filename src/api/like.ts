@@ -30,3 +30,8 @@ export const commentLikeCount = (CommentID: number) => {
 export const removeCommentLike = (CommentID: number) => {
   return service.post(`/comments/removeLike`, { CommentID })
 }
+//获得点赞数
+export const getLikeCount = (UserID: number) => {
+  // console.log(UserID)
+  return service.get(`/like/getLikeCount?UserID=${UserID}`)
+}

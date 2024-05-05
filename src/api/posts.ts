@@ -57,6 +57,10 @@ export const fetchHotPost = () => {
 
 //删除文章
 export const deletePostByPostID = (PostID: number) => {
-  console.log(PostID)
+  // console.log(PostID)
   return service.post(`/posts/deletePost`, { PostID })
+}
+//查找所有文章
+export const fetchAllPost = () => {
+  return service.get(`/posts/fetchAllPost`)
 }

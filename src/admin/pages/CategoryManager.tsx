@@ -3,7 +3,8 @@ import { Button, Modal, Form, Input, message, Space, Table } from 'antd'
 import { PlusOutlined, CategoryOutlined } from '@ant-design/icons'
 import { addCategory, deleteCategory, getAllCategories, updateCategory } from '../api/category'
 import '../style/CategoryManager.less'
-import { CategoryType } from '@/types/model' // 假设你有一个名为 CategoryModal 的类型定义
+import { CategoryType } from '@/types/model'
+import { showConfirm } from '@/utils/button' // 假设你有一个名为 CategoryModal 的类型定义
 
 const { confirm } = Modal
 
@@ -42,28 +43,14 @@ const CategoryManager: React.FC = () => {
       console.error('添加分类失败：', error)
     }
   }
-
-  const showDeleteConfirm = (category: CategoryType) => {
-    confirm({
-      title: '确定要删除此分类吗？',
-      content: '此操作无法撤销',
-      okText: '确定',
-      okType: 'danger',
-      cancelText: '取消',
-      onOk() {
-        deleteCategory(category.CategoryID)
-          .then(() => {
-            message.success('分类删除成功')
-            fetchCategories()
-          })
-          .catch((error) => {
-            console.error('删除分类失败：', error)
-          })
-      },
-      onCancel() {
-        console.log('已取消删除')
-      },
-    })
+  const handleDelete = async (category: CategoryType) => {
+    try {
+      await deleteCategory(category.CategoryID)
+      message.success('分类删除成功')
+      fetchCategories()
+    } catch (error) {
+      console.error('删除分类失败：', error)
+    }
   }
 
   const handleEditCategory = async () => {
@@ -112,7 +99,7 @@ const CategoryManager: React.FC = () => {
       render: (text, record: CategoryType) => (
         <Space size="middle">
           <a onClick={() => handleEdit(record)}>编辑</a>
-          <a onClick={() => showDeleteConfirm(record)}>删除</a>
+          <a onClick={() => showConfirm(() => handleDelete(record))}>删除</a>
         </Space>
       ),
     },

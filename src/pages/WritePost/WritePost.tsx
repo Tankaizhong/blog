@@ -12,6 +12,7 @@ import {
   Row,
   Col,
   Popover,
+  Flex,
 } from 'antd'
 import MarkdownEditor from './MarkdownEditor' // 假设有一个 Markdown 编辑器组件
 import { publishPost } from '@/api/posts' // 导入获取分类和标签的接口方法
@@ -59,8 +60,6 @@ const WritePost: React.FC = () => {
   const handleSubmit = (values: any) => {
     publishPost({ title, content, selectedCategory, selectedTags })
       .then((response) => {
-        // console.log('文章发布成功:', response)
-        // setModalVisible(true) // 打开模态框
         navigateTo('/home/publishSuccess')
       })
       .catch((error) => {
@@ -90,37 +89,42 @@ const WritePost: React.FC = () => {
   return (
     <Layout className="write-post-layout">
       <Content className="write-post-content">
-        <Form form={form} onFinish={handleSubmit} layout="vertical">
-          <Form.Item
-            name="Title"
-            className="title-form-item"
-            rules={[{ required: true, message: '请输入标题' }]}
-          >
-            <div className="title-input-wrapper">
-              <Input
-                className="title-input"
-                placeholder="请输入标题"
-                onChange={(e) => setTitle(e.target.value)}
-              />
-              <Popover
-                trigger="click"
-                title="发布文章"
-                // visible={popoverVisible} // 控制 Popover 的显示状态
-                content={() => (
-                  <TagAndCategories
-                    onCategoryChange={handleCategoryChange}
-                    onTagChange={handleTagChange}
-                    onSubmit={handleSubmit}
-                  />
-                )}
-              >
-                <Button type="primary">发布</Button>
-              </Popover>
-            </div>
-          </Form.Item>
-          <Form.Item name="Content" rules={[{ required: true, message: '请输入内容' }]}>
-            <MarkdownEditor value={content} onChange={handleContentChange} />
-          </Form.Item>
+        <Flex vertical="true" align="space-between">
+          <Form form={form} onFinish={handleSubmit} layout="vertical">
+            <Form.Item
+              name="Title"
+              className="title-form-item"
+              rules={[{ required: true, message: '请输入标题' }]}
+            >
+              <div className="title-input-wrapper">
+                <Input
+                  className="title-input"
+                  placeholder="请输入标题"
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <Popover
+                  trigger="click"
+                  title="发布文章"
+                  // visible={popoverVisible} // 控制 Popover 的显示状态
+                  content={() => (
+                    <TagAndCategories
+                      onCategoryChange={handleCategoryChange}
+                      onTagChange={handleTagChange}
+                      onSubmit={handleSubmit}
+                    />
+                  )}
+                >
+                  <Button type="primary">发布</Button>
+                </Popover>
+              </div>
+            </Form.Item>
+            <Form.Item name="Content" rules={[{ required: true, message: '请输入内容' }]}>
+              <div style={{ maxHeight: '500px' }}>
+                <MarkdownEditor value={content} onChange={handleContentChange} />
+              </div>
+            </Form.Item>
+          </Form>
+
           <div className="word-count">
             <div className="word">
               <span>字符数: {wordCount.characters}</span>
@@ -138,7 +142,7 @@ const WritePost: React.FC = () => {
               </a>
             </div>
           </div>
-        </Form>
+        </Flex>
       </Content>
       {/* 提交后的模态框 */}
     </Layout>

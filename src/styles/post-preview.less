@@ -6,10 +6,8 @@
   background-color: #ffffff;
   padding: 10px 20px;
 
-  .post-content {
-    p {
-      margin: 5px 0px;
-    }
+  .post-content pre {
+    margin: 5px 0;
   }
 
   .post-title {
@@ -24,8 +22,13 @@
     font-size: 14px;
 
     .post-infor {
+      text-align: center; /* 居中对齐 */
+      span {
+        display: inline-block; /* 行内块元素 */
+        //background-color: red;
+      }
       span:not(:first-child) {
-        margin-left: 20px;
+        margin-left: 20px; /* 控制项目之间的间距 */
       }
     }
 

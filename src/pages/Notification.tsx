@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { List, Avatar, Button } from 'antd'
+import { List, Avatar, Button, Flex } from 'antd'
 import { getStorage } from '@/utils/storage'
 import { LOCAL_STORAGE_NAME } from '@/config'
 import { fetchNotification, markNotificationRead } from '@/api/notifications'
 import { NotificationType, UserType } from '@/types/model'
+import '@/styles/notification.less'
 
 const NotificationComponent = () => {
   const [notifications, setNotifications] = useState<NotificationType[]>([])
@@ -22,6 +23,7 @@ const NotificationComponent = () => {
 
   // 轮询获取通知
   const pollNotifications = async () => {
+    console.log(UserInfo)
     if (UserInfo) {
       try {
         const { notifications } = await fetchNotification(UserInfo as UserType)
@@ -48,31 +50,49 @@ const NotificationComponent = () => {
     }
   }
 
+  //排序通知
+  const unreadNotifications = notifications.filter((notification) => !notification.IsRead)
+  const readNotifications = notifications.filter((notification) => notification.IsRead)
+
+  const sortedNotifications = [
+    ...unreadNotifications,
+    ...readNotifications.sort(
+      (a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime()
+    ),
+  ]
+
   return (
-    <div>
-      <h2>Notifications</h2>
-      <List
-        itemLayout="vertical"
-        size="large"
-        dataSource={notifications.sort(
-          (a, b) => new Date(a.createAt).getTime() - new Date(b.createAt).getTime()
-        )} // 根据 createAt 排序
-        renderItem={(notification: NotificationType) => (
-          <List.Item
-            className="notification-item" // 添加类名
-            key={notification.NotificationID}
-            style={{ fontWeight: notification.IsRead ? 'normal' : 'bold' }}
-            onClick={() => markAsRead(notification)} // 在List.Item中添加onClick事件
-          >
-            <List.Item.Meta
-              avatar={<Avatar src={notification.User?.Avatar} />}
-              title={<a href="#">{notification.User?.Nickname}</a>}
-              description={notification.Content}
-            />
-            <div>{notification.createAt}</div>
-          </List.Item>
-        )}
-      />
+    <div className="notification-list">
+      <Flex justify="center">
+        <div className="notification-list-content">
+          <List
+            itemLayout="vertical"
+            size="large"
+            pagination={{
+              onChange: (page) => {
+                console.log(page)
+              },
+              pageSize: 7,
+            }}
+            dataSource={sortedNotifications} // 根据 createAt 排序
+            renderItem={(notification: NotificationType) => (
+              <List.Item
+                className="notification-item" // 添加类名
+                key={notification.NotificationID}
+                style={{ fontWeight: notification.IsRead ? 'normal' : 'bold' }}
+                onClick={() => markAsRead(notification)} // 在List.Item中添加onClick事件
+              >
+                <List.Item.Meta
+                  avatar={<Avatar src={notification.User?.Avatar} />}
+                  title={<a href="#">{notification.User?.Nickname}</a>}
+                  description={notification.Content}
+                />
+                <div>{notification.createAt}</div>
+              </List.Item>
+            )}
+          />
+        </div>
+      </Flex>
     </div>
   )
 }

@@ -11,6 +11,8 @@ export interface UserType {
   Age?: number
   PhoneNumber?: string
   Admin: boolean
+  token?: string
+  Status: 'active' | 'inactive' | 'blocked'
 }
 
 export interface PostType {
@@ -25,12 +27,12 @@ export interface PostType {
 }
 
 export interface CommentType {
-  CommentID: number
+  CommentID?: number
   CommentDate: Date
   Likes: number
   UserID: number
   PostID: number
-  ParentCommentID: number | null
+  ParentCommentID?: number | null
   Content: string
   createdAt?: number
   Username?: string

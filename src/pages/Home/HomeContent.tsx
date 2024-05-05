@@ -8,7 +8,7 @@ import { useParams, useLocation } from 'react-router-dom'
 const HomeContent = () => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
-  const query = queryParams.get('query') // 获取查询参数
+
   const { sharedState: CategoryID } = useParams<{ sharedState: string }>()
   //调用fetchPostList
   const [postList, setPostList] = useState([]) // 用于存储文章列表数据的状态
@@ -23,7 +23,7 @@ const HomeContent = () => {
       console.error('Failed to fetch post list:', error)
     }
   }
-
+  const query = queryParams.get('query') // 获取查询参数
   useEffect(() => {
     if (query) {
       //搜索文章的

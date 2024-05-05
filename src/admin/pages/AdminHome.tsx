@@ -6,21 +6,15 @@ import {
   SettingOutlined,
   AppstoreOutlined,
   MessageOutlined,
+  FileTextOutlined,
 } from '@ant-design/icons'
 import { Outlet } from 'react-router-dom'
-
-import { checkAdminAPI, getUserInfo } from '@/admin/api/admin' // 从后端获取用户信息的函数
-
 const { Sider, Content } = Layout
-
-import Login from '@/components/Login'
-import { getStorage } from '@/utils/storage'
-import { LOCAL_STORAGE_NAME } from '@/config'
 import { navigateTo } from '@/utils/router'
+import '../style/AdminHome.less'
 
-const AdminDashboard = () => {
+const AdminHome = () => {
   const [collapsed, setCollapsed] = useState(false)
-
   const toggleCollapsed = () => {
     setCollapsed(!collapsed)
   }
@@ -32,16 +26,9 @@ const AdminDashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false)
 
   const [token, setToken] = useState(null)
-
-  useEffect(() => {
-    const Admin = getStorage(LOCAL_STORAGE_NAME)?.Admin
-    // console.log(Admin)
-    if (!Admin) navigateTo('/')
-  })
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout>
       <Sider collapsible collapsed={collapsed} onCollapse={toggleCollapsed}>
-        <div className="logo" />
         <Menu onClick={handleMenuClick} theme="dark" defaultSelectedKeys={['1']} mode="inline">
           <Menu.Item key="dashBoard" icon={<DesktopOutlined />}>
             Dashboard
@@ -58,6 +45,10 @@ const AdminDashboard = () => {
             评论管理
           </Menu.Item>
 
+          <Menu.Item key="PostManager" icon={<FileTextOutlined />}>
+            文章管理
+          </Menu.Item>
+
           <Menu.SubMenu key="sub1" icon={<UserOutlined />} title="用户管理">
             <Menu.Item key="users">用户列表</Menu.Item>
           </Menu.SubMenu>
@@ -67,8 +58,8 @@ const AdminDashboard = () => {
         </Menu>
       </Sider>
       <Layout className="site-layout">
-        <Content style={{ margin: '16px' }}>
-          <div style={{ padding: 24, minHeight: 360, background: '#fff' }}>
+        <Content>
+          <div className="sider-content">
             <Outlet />
           </div>
         </Content>
@@ -77,4 +68,4 @@ const AdminDashboard = () => {
   )
 }
 
-export default AdminDashboard
+export default AdminHome

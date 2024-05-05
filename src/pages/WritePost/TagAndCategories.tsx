@@ -50,7 +50,12 @@ const TagAndCategories = ({ onCategoryChange, onTagChange, onSubmit }) => {
       {/* 在这里添加你想展示的内容，例如标签和分类 */}
       <div className="category-content">
         <p>分类：</p>
-        <Select style={{ width: '100%' }} onChange={handleCategoryChange} value={selectedCategory}>
+        <Select
+          required
+          style={{ width: '100%' }}
+          onChange={handleCategoryChange}
+          value={selectedCategory}
+        >
           {categories.map((category) => (
             <Select.Option key={category.CategoryID} value={category.CategoryName}>
               {category.CategoryName}

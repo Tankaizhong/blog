@@ -14,20 +14,20 @@ echarts.use([
 ])
 
 const renderPieChart = (domId, categoryData) => {
-  // console.log(domId)
   const chartDom = document.getElementById(domId)
   const myChart = echarts.init(chartDom)
   const option = {
     title: {
       text: '分类文章统计',
       left: 'center',
+      top: 30,
     },
     tooltip: {
       trigger: 'item',
     },
     legend: {
-      orient: 'vertical',
-      left: 'left',
+      orient: 'horizontal', // 将图例水平放置
+      bottom: 10, // 调整图例距离底部的距离
     },
     series: [
       {
@@ -46,10 +46,10 @@ const renderPieChart = (domId, categoryData) => {
     ],
   }
   myChart.setOption(option)
-
   // 设置容器样式
-  chartDom.style.width = '100%'
-  chartDom.style.height = '400px'
+  // 设置容器样式
+  chartDom.style.width = '100%' // 设置容器宽度
+  chartDom.style.margin = '0 auto' // 设置水平居中
 }
 
 export { renderPieChart }
