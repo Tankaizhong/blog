@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Button, message, Avatar, Menu, Dropdown } from 'antd'
-import { LogoutOutlined, SettingOutlined, SkinOutlined, UserOutlined } from '@ant-design/icons'
+import { Button, Avatar} from 'antd'
+import {  UserOutlined } from '@ant-design/icons'
 import '../styles/user-card.less'
-import { clearStorage, getStorage, removeStorage } from '@/utils/storage'
+import {  getStorage } from '@/utils/storage'
 import { LOCAL_STORAGE_NAME } from '@/config'
 
 import { UserType } from '@/types/model'
 import LogoutButton from '@/components/LogoutButton'
 import { navigateTo } from '@/utils/router'
+
 
 const UserCard = () => {
   const handleWriteArticle = () => {
@@ -15,15 +16,15 @@ const UserCard = () => {
     navigateTo('/draft')
   }
 
-  const handleAccountSettings = () => {
-    // 跳转到账号设置页面
-    navigateTo('/account/settings')
-  }
-
-  const handleAppearanceSettings = () => {
-    // 跳转到外观设置页面
-    navigateTo('/appearance/settings')
-  }
+  // const handleAccountSettings = () => {
+  //   // 跳转到账号设置页面
+  //   navigateTo('/account/settings')
+  // }
+  //
+  // const handleAppearanceSettings = () => {
+  //   // 跳转到外观设置页面
+  //   navigateTo('/appearance/settings')
+  // }
 
   const handleAccountSetting = () => {
     navigateTo('/account/settings')
@@ -51,6 +52,7 @@ const UserCard = () => {
         账号设置
       </Button>
 
+      {/*退出登录*/}
       <LogoutButton />
     </div>
   )

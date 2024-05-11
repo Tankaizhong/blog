@@ -10,25 +10,73 @@
     //height: 100vh;
     background-color: #ffffff;
 
+    .user-rank-title {
+      padding-left: 20px;
+      padding-top: 20px;
+      //设置字体
+      font-size: 20px;
+    }
+
     .user-rank-infor {
-      width: 100px;
-      .rank-1 {
-        background: linear-gradient(to right, red, yellow);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+      padding: 0 30px;
+
+      .user-rank-infor-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        .user-rank {
+          .top-rank-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            //background-color: red;
+          }
+
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          img {
+            display: block; /* 修改为 display: block; */
+            max-width: 100%; /* 或者设置一个最大宽度 */
+            height: auto; /* 自动调整高度以保持宽高比 */
+          }
+        }
+
+        .user-rank span:nth-last-child(2) {
+          font-size: 20px;
+          font-weight: bold;
+        }
+        .user-rank span:nth-last-child(1) {
+          margin-left: 10px;
+          color: #8a919f;
+        }
+
+        .top-rank-icon {
+          display: inline-block;
+          width: 5px;
+          height: 5px;
+        }
+
+        //123排名样式
+        .rank-1 {
+          background: linear-gradient(to right, red, yellow);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .rank-2 {
+          background: linear-gradient(to right, orange, yellow);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .rank-3 {
+          background: linear-gradient(to right, yellow, green);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
       }
 
-      .rank-2 {
-        background: linear-gradient(to right, orange, yellow);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .rank-3 {
-        background: linear-gradient(to right, yellow, green);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
       .user-rank-name {
         //font-size: 1.5em;
         font-weight: bold;

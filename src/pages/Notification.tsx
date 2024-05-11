@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { List, Avatar, Button, Flex } from 'antd'
+import { List, Avatar, Flex } from 'antd'
 import { getStorage } from '@/utils/storage'
 import { LOCAL_STORAGE_NAME } from '@/config'
 import { fetchNotification, markNotificationRead } from '@/api/notifications'

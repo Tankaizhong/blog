@@ -1,7 +1,7 @@
 //生成fetchPostList的api
 
 import service from '@/utils/axios'
-import { CategoryType, PostType, TagType } from '@/types/model'
+
 
 export const fetchCategoriesList = () => {
   return service.get('/user/categoriesList')
@@ -20,7 +20,7 @@ export const addView = (PostID: number) => {
   return service.post(`/posts/view`, { PostID })
 }
 //抓取分类
-export const fetchCategories = (PostID: number) => {
+export const fetchCategories = () => {
   return service.get(`/posts/fetchCategories`)
 }
 
@@ -31,6 +31,7 @@ export const publishPost = (data) => {
     Title: data.title,
     TagName: data.selectedTags,
     CategoryName: data.selectedCategory,
+    Summary: data.summary,
   }
   return service.post(`/posts/publish`, post)
 }
@@ -39,7 +40,7 @@ export const publishPost = (data) => {
 export const fetchPostByCategory = (CategoryID) => {
   return service.post(`/posts/fetchPostByCategory`, { CategoryID })
 }
-export const fetchTags = (PostID: number) => {
+export const fetchTags = () => {
   return service.get(`/posts/fetchTags`)
 }
 

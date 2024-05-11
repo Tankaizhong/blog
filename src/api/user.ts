@@ -1,5 +1,7 @@
 import service from '@/utils/axios'
 import type { UserType } from '@/types/model'
+import { LOCAL_STORAGE_NAME } from '@/config'
+import { getStorage } from '@/utils/storage'
 //登陆接口
 export const login = (data: UserType) => {
   return service.post('/user/login', data)
@@ -43,4 +45,29 @@ export const deleteUser = (UserID) => {
 //用户排行
 export const getUserRankings = () => {
   return service.get('/user/rankings')
+}
+
+//密码重置请求
+export const resetPasswordRequest = (data: Object) => {
+  const user = {
+    ...getStorage(LOCAL_STORAGE_NAME),
+    ...data,
+  }
+  return service.post('/user/resetPasswordRequest', { user })
+}
+//code验证
+export const verifyCode = (data: Object) => {
+  const user = {
+    ...getStorage(LOCAL_STORAGE_NAME),
+    ...data,
+  }
+  return service.post('/user/verifyCode', { user })
+}
+//密码验证
+export const resetPassword = (data) => {
+  const user = {
+    ...getStorage(LOCAL_STORAGE_NAME),
+    ...data,
+  }
+  return service.post('/user/resetPassword', { user })
 }

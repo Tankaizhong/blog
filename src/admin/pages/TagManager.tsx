@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { Button, Tag, Modal, Form, Input, message, Space, Table } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
-import { addTag, deleteTag, getAllTags, updateTag } from '../api/tag'
+import React, {useEffect, useState} from 'react'
+import {Button, Divider, Form, Input, message, Modal, Space, Table, Tag} from 'antd'
+import {PlusOutlined} from '@ant-design/icons'
+import {addTag, deleteTag, getAllTags, updateTag} from '../api/tag'
 import '../style/TagManager.less'
-import { TagType } from '@/types/model' // 引入样式文件
+import {TagType} from '@/types/model' // 引入样式文件
 
 const { confirm } = Modal
 
@@ -20,8 +20,9 @@ const TagManager: React.FC = () => {
   const fetchTags = async () => {
     try {
       const data = await getAllTags()
-      if (data && data.tags) {
-        const processedTags = data.tags.map((tag: TagType, index) => {
+      const {tags: tags1} = data;
+      if (data && tags1) {
+        const processedTags = tags1.map((tag: TagType) => {
           return {
             ...tag,
             key: tag.TagID,
@@ -142,6 +143,7 @@ const TagManager: React.FC = () => {
 
   return (
     <div className="tag-manager">
+      <Divider orientation="left">标签管理</Divider>
       <Button
         type="primary"
         onClick={() => {

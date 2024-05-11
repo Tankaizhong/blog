@@ -1,7 +1,7 @@
 import service from '@/utils/axios'
 import { TagType } from '@/types/model'
 
-export const getAllTags = (userInfo) => {
+export const getAllTags = () => {
   return service.post('tag/fetchAllTags')
 }
 export const deleteTag = (tagID) => {

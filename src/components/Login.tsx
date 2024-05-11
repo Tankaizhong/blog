@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, Button, Checkbox, message } from 'antd'
+import { Form, Input, Button, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import '@/styles/login.less'
 import { UserType } from '@/types/model'
@@ -8,6 +8,7 @@ import Register from '@/components/Register'
 import { saveStorage } from '@/utils/storage'
 import { ResponseLogin } from '@/types'
 import { LOCAL_STORAGE_NAME } from '@/config'
+import ForgotPasswordModal from '@/components/ForgotPasswordModal'
 
 const Login: React.FC = ({ onCloseModal }: { onCloseModal: () => void }) => {
   const [loading, setLoading] = useState(false)
@@ -20,7 +21,7 @@ const Login: React.FC = ({ onCloseModal }: { onCloseModal: () => void }) => {
     setLoading(true)
     const { Username, Password }: UserType = values
     try {
-      const res = (await login({ Username, Password })) as ResponseLogin
+      const res = (await login({ Username, Password } as any)) as ResponseLogin
       setLoading(false)
       saveStorage(LOCAL_STORAGE_NAME, res.result)
       onCloseModal()
@@ -30,9 +31,8 @@ const Login: React.FC = ({ onCloseModal }: { onCloseModal: () => void }) => {
     }
   }
 
-  const handleRegister = async (values: any) => {
+  const handleRegister = async () => {
     setLoading(true)
-
     setIsRegister(false)
   }
 
@@ -40,6 +40,12 @@ const Login: React.FC = ({ onCloseModal }: { onCloseModal: () => void }) => {
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('失败:', errorInfo)
+  }
+
+  const [modalVisible, setModalVisible] = useState(false)
+
+  const handleForgotPassword = () => {
+    setModalVisible(true) // 显示弹窗
   }
 
   return (
@@ -63,10 +69,10 @@ const Login: React.FC = ({ onCloseModal }: { onCloseModal: () => void }) => {
             <Form.Item name="remember" valuePropName="checked" noStyle>
               <Checkbox>记住我</Checkbox>
             </Form.Item>
-
-            <a className="login-form-forgot" href="/">
+            <a className="login-form-forgot" onClick={handleForgotPassword}>
               忘记密码
             </a>
+            <ForgotPasswordModal visible={modalVisible} onClose={() => setModalVisible(false)} />
           </Form.Item>
 
           <Form.Item>

@@ -90,7 +90,7 @@ const PostDetail = () => {
             </div>
           </div>
         )}
-        <div className="post-content">
+        <div className="post-detail-content">
           {post && (
             <div className="post-layout-content">
               <h1 className="post-title" level={2}>

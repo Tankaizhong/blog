@@ -1,29 +1,23 @@
 import React from 'react'
-import { Card, Flex, Space, Tag, Typography } from 'antd'
+import {  Tag  } from 'antd'
 import '@/styles/post-preview.less'
 import { EyeOutlined, LikeOutlined } from '@ant-design/icons'
 import { TagType, UserType } from '@/types/model'
-import ReactMarkdown from 'react-markdown'
+
 import { TextStyle } from '@/styles/font'
 
-const { Meta } = Card
-const { Text } = Typography
 
 const PostPreview = (data) => {
-  const { Title, User, Views, Likes, Content, Tags }: { User: UserType } = data.post
-  const truncateContent = (content) => {
-    const maxLength = 34 // 设置最大长度
-    return content.length > maxLength ? `${content.substring(0, maxLength)}...` : content
-  }
+  const { Title, User, Views, Likes, Tags, Summary }: { User: UserType } = data.post
   const handleClick = () => {
-    window.open(`/post/${data.post.PostID}`, '_blank')
+    window.location.href = `/post/${data.post.PostID}`
   }
 
   return (
-    <div className="post-preview" onClick={(e) => handleClick(e)}>
+    <div className="post-preview" onClick={() => handleClick()}>
       <span className="post-title">{Title}</span>
       <div className="post-content" style={{ ...TextStyle, fontWeight: '400' }}>
-        <ReactMarkdown>{truncateContent(Content)}</ReactMarkdown>
+        {Summary}
       </div>
       <div className="post-meta">
         <div className="post-infor">

@@ -21,3 +21,7 @@ export const deleteComment = (CommentID) => {
   console.log(CommentID)
   return service.post(`/comments/deleteComment`, { CommentID })
 }
+//举报评论
+export const reportComment = (CommentID) => {
+  return service.post(`/comments/reportComment`, { CommentID })
+}

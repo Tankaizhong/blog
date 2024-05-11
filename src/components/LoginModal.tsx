@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Modal, Button, message } from 'antd'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
+import '@/styles/login-modal.less'
+
 
 const LoginModal = ({ open, onCancel }) => {
   const [isLogin, setIsLogin] = useState(true)
@@ -14,7 +16,8 @@ const LoginModal = ({ open, onCancel }) => {
     //弹窗显示
     handleToggleLogin()
   }
-  const [messageApi, contextHolder] = message.useMessage()
+
+
   const handleCloseModal = () => {
     message.success('登录成功')
     // window.location.reload();
@@ -28,8 +31,18 @@ const LoginModal = ({ open, onCancel }) => {
       ) : (
         <Register onSuccess={handleSuccess} />
       )}
-      <div>
+      <div className="login-bottom-button">
         <Button onClick={handleToggleLogin}>切换到{isLogin ? '注册' : '登录'}</Button>
+
+        <Button>扫码登录</Button>
+
+        {/* 二维码扫描组件 */}
+        {/*<QrReader*/}
+        {/*    delay={300}*/}
+        {/*    onError={handleError}*/}
+        {/*    onScan={handleScan}*/}
+        {/*    style={{ display: 'none' }} // 隐藏扫描组件，仅用于触发扫描逻辑*/}
+        {/*/>*/}
       </div>
     </Modal>
   )

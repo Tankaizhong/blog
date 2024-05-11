@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Layout,
   Form,
   Input,
   Button,
-  Modal,
   Checkbox,
   message,
-  Select,
-  Tag,
-  Row,
-  Col,
-  Popover,
   Flex,
+  Drawer,
 } from 'antd'
 import MarkdownEditor from './MarkdownEditor' // 假设有一个 Markdown 编辑器组件
 import { publishPost } from '@/api/posts' // 导入获取分类和标签的接口方法
 import '@/styles/write-post.less'
-import { CategoryType, TagType } from '@/types/model'
+
 import TagAndCategories from '@/pages/WritePost/TagAndCategories'
 import { navigateTo } from '@/utils/router'
 
@@ -26,13 +21,11 @@ const { Content } = Layout
 const WritePost: React.FC = () => {
   const [form] = Form.useForm()
   const [title, setTitle] = useState('')
+  const [summary, setSummary] = useState('') // 文章摘要
   const [content, setContent] = useState('')
   const [wordCount, setWordCount] = useState({ lines: 0, words: 0, characters: 0 })
-  const [modalVisible, setModalVisible] = useState(false)
+
   const [syncScroll, setSyncScroll] = useState(false)
-
-  const [popoverVisible, setPopoverVisible] = useState(false) // 控制 Popover 的显示状态
-
   //子组件的数据
   const [selectedCategory, setSelectedCategory] = useState('') // 用户选择的分类
   const [selectedTags, setSelectedTags] = useState([]) // 用户选择的标签
@@ -58,8 +51,9 @@ const WritePost: React.FC = () => {
 
   // 提交表单
   const handleSubmit = (values: any) => {
-    publishPost({ title, content, selectedCategory, selectedTags })
-      .then((response) => {
+    publishPost({ title, content, selectedCategory, selectedTags, summary })
+      .then(() => {
+        message.success('文章发布成功')
         navigateTo('/home/publishSuccess')
       })
       .catch((error) => {
@@ -86,6 +80,16 @@ const WritePost: React.FC = () => {
     setWordCount(stats)
   }
 
+  // 显示发布文章的弹窗
+  const [open, setOpen] = useState(false)
+  const showDrawer = () => {
+    setOpen(true)
+  }
+
+  const onClose = () => {
+    setOpen(false)
+  }
+
   return (
     <Layout className="write-post-layout">
       <Content className="write-post-content">
@@ -102,20 +106,24 @@ const WritePost: React.FC = () => {
                   placeholder="请输入标题"
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                <Popover
+                <Button onClick={showDrawer} type="primary">
+                  发布
+                </Button>
+
+                <Drawer
                   trigger="click"
                   title="发布文章"
                   // visible={popoverVisible} // 控制 Popover 的显示状态
-                  content={() => (
-                    <TagAndCategories
-                      onCategoryChange={handleCategoryChange}
-                      onTagChange={handleTagChange}
-                      onSubmit={handleSubmit}
-                    />
-                  )}
+                  onClose={onClose}
+                  open={open}
                 >
-                  <Button type="primary">发布</Button>
-                </Popover>
+                  <TagAndCategories
+                    onCategoryChange={handleCategoryChange}
+                    onTagChange={handleTagChange}
+                    onSummaryChange={setSummary}
+                    onSubmit={handleSubmit}
+                  />
+                </Drawer>
               </div>
             </Form.Item>
             <Form.Item name="Content" rules={[{ required: true, message: '请输入内容' }]}>
@@ -144,7 +152,6 @@ const WritePost: React.FC = () => {
           </div>
         </Flex>
       </Content>
-      {/* 提交后的模态框 */}
     </Layout>
   )
 }

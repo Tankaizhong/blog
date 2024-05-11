@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Layout, Menu, MenuProps } from 'antd'
 import {
   DesktopOutlined,
   UserOutlined,
-  SettingOutlined,
   AppstoreOutlined,
   MessageOutlined,
   FileTextOutlined,
@@ -22,13 +21,10 @@ const AdminHome = () => {
     // console.log(e.key)
     navigateTo(`/admin/${e.key}`)
   }
-  //判断超级管理员
-  const [isAdmin, setIsAdmin] = useState(false)
 
-  const [token, setToken] = useState(null)
   return (
     <Layout>
-      <Sider collapsible collapsed={collapsed} onCollapse={toggleCollapsed}>
+      <Sider collapsible={true} collapsed={collapsed} onCollapse={toggleCollapsed}>
         <Menu onClick={handleMenuClick} theme="dark" defaultSelectedKeys={['1']} mode="inline">
           <Menu.Item key="dashBoard" icon={<DesktopOutlined />}>
             Dashboard
@@ -51,9 +47,6 @@ const AdminHome = () => {
 
           <Menu.SubMenu key="sub1" icon={<UserOutlined />} title="用户管理">
             <Menu.Item key="users">用户列表</Menu.Item>
-          </Menu.SubMenu>
-          <Menu.SubMenu key="sub2" icon={<SettingOutlined />} title="Settings">
-            <Menu.Item key="5">Privacy</Menu.Item>
           </Menu.SubMenu>
         </Menu>
       </Sider>

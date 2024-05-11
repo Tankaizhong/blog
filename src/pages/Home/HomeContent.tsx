@@ -17,7 +17,7 @@ const HomeContent = () => {
   const fetchData = async () => {
     try {
       const post = await fetchPostList(CategoryID)
-
+      console.log(post.data)
       setPostList(post.data) // 更新文章列表数据
     } catch (error) {
       console.error('Failed to fetch post list:', error)

@@ -36,6 +36,7 @@ export interface CommentType {
   Content: string
   createdAt?: number
   Username?: string
+  isReported?:boolean
 }
 
 export interface CategoryType {

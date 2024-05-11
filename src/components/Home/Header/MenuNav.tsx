@@ -23,7 +23,7 @@ function getItem(
   } as MenuItem
 }
 
-function menuNav(props) {
+function menuNav() {
   const onClick: MenuProps['onClick'] = (e) => {
     // navigateTo('/' + e.key)
     switch (e.key) {
@@ -33,7 +33,7 @@ function menuNav(props) {
       case 'posts':
         navigateTo('/' + e.key)
         break
-      case 'contact':
+      case 'chat':
         navigateTo('/' + e.key)
         break
       case 'login':

@@ -2,21 +2,21 @@
 import React, { useEffect, useState } from 'react'
 import '../../styles/home.less'
 import Header from '@/components/Home/Header/Header'
-import { Layout, theme, Menu, Flex } from 'antd'
+import { Layout, Menu, Flex } from 'antd'
 import type { MenuProps } from 'antd'
 import type { CategoryType } from '@/types/model'
-import { fetchCategoriesList, fetchPostByCategory } from '@/api/posts'
+import { fetchCategoriesList } from '@/api/posts'
 import PageFooter from '@/components/PageFooter'
-import { Outlet, Route, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { register } from '@/api/user'
 import { ADMIN } from '@/config'
 import { getUserInfo } from '@/admin/api/admin'
-import RightContent from '@/pages/Home/RightContent'
+import RightContentHotPost from '@/pages/Home/RightContentHotPost'
+import RightContentLocation from '@/pages/Home/RightContentLocation'
 
-const { Content, Footer, Sider } = Layout
+const {  Sider } = Layout
 
 const Home: React.FC = () => {
-  const [sharedState, setSharedState] = useState<any>(null)
   //渲染菜单
   const renderMenuItems = (categories: CategoryType[]) => {
     return categories.map((category) => ({
@@ -44,9 +44,10 @@ const Home: React.FC = () => {
       if (!hasSuperAdmin) {
         // 如果不存在超级管理员，则创建超级管理员
         await register({
+          Status: 'active',
           Password: ADMIN.PASSWORD,
           Username: ADMIN.NAME,
-          Admin: true,
+          Admin: true
         }) // 假设 createUser 方法用于创建超级管理员
         console.log('Super admin created successfully')
       }
@@ -57,12 +58,12 @@ const Home: React.FC = () => {
   }
   useEffect(() => {
     // 在 useEffect 中发起请求
-    fetchCategories().then((res) => {
-      // console.log("ok")
+    fetchCategories().then(() => {
+
     })
     checkSuperAdmin()
-      .then((res) => {
-        // console.log(res)
+      .then(() => {
+
       })
       .catch((err) => {
         console.log(err)
@@ -70,9 +71,6 @@ const Home: React.FC = () => {
   }, []) // 第二个参数为依赖数组，表示仅在组件挂载时执行一次
   const navigate = useNavigate()
   const handleMenuClick = (e: MenuProps['onClick']) => {
-    console.log(e.key)
-    setSharedState(e.key)
-
     navigate(`/home/all/${e.key}`)
   }
 
@@ -92,10 +90,14 @@ const Home: React.FC = () => {
             </Sider>
           </div>
           <div className="home-content">
-            {/*<HomeContent sharedState={sharedState} setSharedState={setSharedState} />*/}
             <Outlet />
           </div>
-          <RightContent />
+          <div className="home-right-content">
+            <Flex vertical={true}>
+              <RightContentHotPost />
+              <RightContentLocation />
+            </Flex>
+          </div>
         </Flex>
       </div>
       {/*页脚*/}

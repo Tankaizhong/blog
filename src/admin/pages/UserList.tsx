@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Table, Space, Button, Modal, Menu, Badge, message } from 'antd'
-import { banUser, fetchUsers } from '@/admin/api/admin'
+import { Table, Space, Button, Modal, Badge, message } from 'antd'
+import { banUser } from '@/admin/api/admin'
 import UserForm from '../component/UserForm'
 import { UserType } from '@/types/model'
 import { AxiosResponse } from 'axios'
-import moment from 'moment'
-import { deleteUser } from '@/api/user'
+import { deleteUser, updateUser } from '@/api/user'
 import { showConfirm } from '@/utils/button'
 import { exportToExcel } from '@/utils/excel'
 import { fetchAndSetUsers } from '@/utils/user'
@@ -56,6 +55,21 @@ const UserList = () => {
         console.error('封禁用户失败:', error)
       })
   }
+  const handleResetPassword = (record: UserType) => {
+    console.log(record)
+    // 重置密码
+    // 1. 生成一个随机密码
+    const updateInfor = {
+      ...record,
+      Password: record.Username,
+      //剔除lastlogintime
+      LastLoginTime: undefined,
+    }
+    updateUser(updateInfor).then(() => {
+      message.success('重置密码成功')
+    })
+  }
+
   const columns = [
     {
       title: '用户名',
@@ -102,6 +116,11 @@ const UserList = () => {
               解封
             </a>
           )}
+
+          {/*  重置密码*/}
+          <a style={{ color: 'green' }} onClick={() => handleResetPassword(record)}>
+            重置密码
+          </a>
         </Space>
       ),
     },

@@ -12,6 +12,7 @@ import PublishSuccess from '@/pages/PublishSuccess'
 import Agreement from '@/pages/Agreement'
 import { withAuth } from '@/HOC/withAuth'
 import UserRankings from '@/pages/UserRankings'
+import ChatGPTIndex from '@/pages/ChatGPT/ChatGPTIndex'
 
 const routes: IRoute[] = [
   //为空时重定位到home
@@ -71,6 +72,11 @@ const routes: IRoute[] = [
     path: '/agreement',
     name: 'agreement',
     element: <Agreement />,
+  },
+  {
+    path: '/chat',
+    name: 'chat',
+    element: <ChatGPTIndex />,
   },
 ]
 

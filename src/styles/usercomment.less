@@ -1,13 +1,16 @@
 .user-comment-container {
   display: flex;
   align-items: flex-end;
+  width: 100%;
+
   .user-avatar {
     margin-right: 10px; /* 为了头像和其他内容之间添加一些间距 */
     align-self: flex-start; /* 将 .user-avatar 单独对齐到底部 */
   }
 
   .user-info-and-content {
-    flex: 1;
+    //flex: 1;
+    width: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -24,8 +27,12 @@
 
   .like-reply {
     height: 40px;
-    display: flex;
+    width: 100%;
     align-items: center;
     color: #8a919f;
+
+    .report-comment {
+      float: right;
+    }
   }
 }

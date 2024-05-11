@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { Form, Input, Button, Upload, message, Image, Flex } from 'antd'
-import { UploadOutlined } from '@ant-design/icons'
+import React, {useEffect, useState} from 'react'
+import {Button, Flex, Form, Image, Input, message, Upload} from 'antd'
+import {UploadOutlined} from '@ant-design/icons'
 import '@/styles/user-profile.less' // 引入自定义样式文件
-import { getStorage, saveStorage } from '@/utils/storage'
-import { LOCAL_STORAGE_NAME } from '@/config'
-import { UserType } from '@/types/model'
-import { updateUser, uploadAvatar } from '@/api/user'
+import {getStorage, saveStorage} from '@/utils/storage'
+import {LOCAL_STORAGE_NAME} from '@/config'
+import {UserType} from '@/types/model'
+import {updateUser, uploadAvatar} from '@/api/user'
+import ResetPasswordModal from '@/components/ResetPasswordModal'
 
 const UserProfileEdit = () => {
   const [form] = Form.useForm()
@@ -23,7 +24,7 @@ const UserProfileEdit = () => {
   const onFinish = (values: any) => {
     console.log('Received values:', values)
     // 这里可以调用后端接口保存用户信息
-    updateUser(values).then((res) => {
+    updateUser(values).then(() => {
       // 更新用户信息
       const storedUserInfo = getStorage(LOCAL_STORAGE_NAME)
       if (storedUserInfo) {
@@ -47,7 +48,6 @@ const UserProfileEdit = () => {
     return isJpgOrPng && isLt2M
   }
 
-  const [avatarBlob, setAvatarBlob] = useState<Blob>(null) // 存储头像的Blob对象
   const handleChange = async (info: any) => {
     if (info.file.status === 'uploading') {
       // 设置头像
@@ -62,8 +62,9 @@ const UserProfileEdit = () => {
           // 更新用户信息
           const storedUserInfo = getStorage(LOCAL_STORAGE_NAME)
           if (storedUserInfo) {
-            setUserInfo({ ...storedUserInfo, Avatar: res.imageUrl })
-            saveStorage(LOCAL_STORAGE_NAME, { ...storedUserInfo, Avatar: res.imageUrl })
+            const {imageUrl} = res;
+            setUserInfo({ ...storedUserInfo, Avatar: imageUrl })
+            saveStorage(LOCAL_STORAGE_NAME, { ...storedUserInfo, Avatar: imageUrl })
           }
         })
         console.log('Avatar uploaded:', response)
@@ -73,6 +74,18 @@ const UserProfileEdit = () => {
         // 这里可以处理上传头像失败后的逻辑，比如显示错误提示信息等
       }
     }
+  }
+
+  //密码重置
+  const [resetPasswordVisible, setResetPasswordVisible] = useState(false)
+  // 处理点击密码重置按钮的函数
+  const handlePasswordSetting = () => {
+    setResetPasswordVisible(true) // 点击按钮时显示密码重置模态框
+  }
+
+  // 处理关闭密码重置模态框的函数
+  const handleResetPasswordModalClose = () => {
+    setResetPasswordVisible(false) // 关闭模态框
   }
 
   return (
@@ -134,9 +147,16 @@ const UserProfileEdit = () => {
               </>
             )}
             <Form.Item>
-              <Button type="primary" htmlType="submit">
-                保存
-              </Button>
+              <Flex justify="space-around">
+                <Button type="primary" htmlType="submit">
+                  保存
+                </Button>
+                <Button onClick={handlePasswordSetting}>密码重置</Button>
+              </Flex>
+              <ResetPasswordModal
+                open={resetPasswordVisible}
+                onCancel={handleResetPasswordModalClose}
+              />
             </Form.Item>
           </Form>
         </div>

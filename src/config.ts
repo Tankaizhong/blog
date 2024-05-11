@@ -5,4 +5,6 @@ export const ADMIN = {
   NAME: 'root',
   PASSWORD: '123456',
 }
-export const OPENAI_API_KEY = your_api_key_here
+
+//高德API的KEY
+export const LOCATION_API_KEY = '3f8a053857bcf93270cc1ce5805751aa'

@@ -1,5 +1,5 @@
-@slider: 20px 10px; // 设置 @slider 变量为 20px 10px 10px 10px;
-@menuWidth: 400px; // 设置 @menuWidth 变量为 200px;
+@import '@/styles/variables.less';
+
 .Contain {
   background-color: rgb(242, 243, 245);
   min-height: 100vh; /* 使用最小高度而不是固定高度，以便在内容较少时也能填满整个页面 */
@@ -8,6 +8,9 @@
 .home {
   height: 100%;
   //background-color: chartreuse;
+  .home-right-content {
+    width: 30%;
+  }
 }
 .ant-layout {
   height: 100%;
