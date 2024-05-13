@@ -4,7 +4,6 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import '@/styles/login-modal.less'
 
-
 const LoginModal = ({ open, onCancel }) => {
   const [isLogin, setIsLogin] = useState(true)
 
@@ -16,7 +15,6 @@ const LoginModal = ({ open, onCancel }) => {
     //弹窗显示
     handleToggleLogin()
   }
-
 
   const handleCloseModal = () => {
     message.success('登录成功')

@@ -10,14 +10,14 @@ const ResetPasswordModal = ({ onCancel, open }) => {
 
   const handleResetPassword = async (values) => {
     setLoading(true)
-    console.log('values:', values)
     try {
       if (step === 1) {
         // 发送重置密码邮件
-        await resetPasswordRequest(values)
-        setEmail(values.Email)
-        setStep(2) // 切换到验证码的步骤
-        message.success('验证码已发送，请查收邮箱。')
+        await resetPasswordRequest(values).then(() => {
+          setEmail(values.Email)
+          setStep(2) // 切换到验证码的步骤
+          message.success('验证码已发送，请查收邮箱。')
+        })
       } else if (step === 2) {
         // 验证验证码
         await verifyCode({ Email: email, Code: values.Code }).then(() => {

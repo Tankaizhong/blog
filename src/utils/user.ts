@@ -8,7 +8,6 @@ import moment from 'moment'
 export const updateLocalUser = (user: UserType) => {
   const oldUser: UserType = getStorage(LOCAL_STORAGE_NAME)
   console.log('oldUser', user, oldUser)
-
   //将新旧信息合并
   const newUser = {
     ...getStorage(LOCAL_STORAGE_NAME),
@@ -33,4 +32,19 @@ export const fetchAndSetUsers = () => {
       console.error('Error fetching users:', error)
       throw error
     })
+}
+
+//判断用户是否是第一次登陆
+export const isFirstTimeUser = () => {
+  // 检查本地存储中是否已经存储了用户登录信息
+  const userInfo: UserType = getStorage(LOCAL_STORAGE_NAME)
+  if (!userInfo) {
+    return false
+  }
+  // 如果用户登录信息不存在，则表示是第一次登录
+  if (!userInfo.Email) {
+    return true
+  } else {
+    return false
+  }
 }

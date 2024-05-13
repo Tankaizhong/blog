@@ -32,7 +32,7 @@ const RightContentHotPost = () => {
   return (
     <div className="left-content">
       <div className="hot-content">
-        <div className="hot-content-tittle">
+        <div className="hot-content-tittle slider-title">
           <FireOutlined /> 热门文章
         </div>
         <List

@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, Space, Tooltip, message, Button } from 'antd'
-import {
-
-  ExclamationCircleOutlined,
-
-  UserOutlined,
-} from '@ant-design/icons'
+import { ExclamationCircleOutlined, UserOutlined } from '@ant-design/icons'
 import '@/styles/usercomment.less'
 import { UserType } from '@/types/model'
 import LikeButton from '@/components/LikeButton'
@@ -33,7 +28,7 @@ const UserComment = ({ comment }) => {
   // 获取评论的点赞总数
   const fetchLikeCount = async () => {
     try {
-      const {likeCount: likeCount1} = await commentLikeCount(CommentID)
+      const { likeCount: likeCount1 } = await commentLikeCount(CommentID)
       // console.log(count)
       setLikeCount(likeCount1)
     } catch (error) {

@@ -3,9 +3,14 @@ import type { UserType } from '@/types/model'
 import { LOCAL_STORAGE_NAME } from '@/config'
 import { getStorage } from '@/utils/storage'
 //登陆接口
-export const login = (data: UserType) => {
+export const login = (data) => {
   return service.post('/user/login', data)
 }
+//邮箱登陆
+export const loginByEmail = (data) => {
+  return service.post('/user/loginByEmail', data)
+}
+
 //注册接口
 export const register = (data: UserType) => {
   return service.post('/user/register', {
@@ -53,6 +58,7 @@ export const resetPasswordRequest = (data: Object) => {
     ...getStorage(LOCAL_STORAGE_NAME),
     ...data,
   }
+
   return service.post('/user/resetPasswordRequest', { user })
 }
 //code验证
@@ -70,4 +76,8 @@ export const resetPassword = (data) => {
     ...data,
   }
   return service.post('/user/resetPassword', { user })
+}
+//邮箱是否重复
+export const checkEmailExist = (email) => {
+  return service.post('/user/checkEmailExist', { email })
 }

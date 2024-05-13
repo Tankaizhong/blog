@@ -6,7 +6,7 @@ import UserSearch from '@/components/Home/UserSearch'
 import '@/styles/header.less'
 import { navigateTo } from '@/utils/router'
 
-const Header = () => {
+const Header = React.forwardRef((props, ref) => {
   /**
    * 跳转到创作者中心
    */
@@ -17,18 +17,23 @@ const Header = () => {
   return (
     <div className="header-content">
       <Flex justify="space-around" gap="small" align="center">
-        <div className="logo">
-          <h3>BOLG</h3>
+        <div className="header-menu-log">
+          <Flex justify="space-around" gap="small" align="center">
+            <a className="logo" href="/home/all">
+              <h3>BOLG</h3>
+            </a>
+            <MenuList />
+          </Flex>
         </div>
-        <MenuList />
+        {/*搜索*/}
         <UserSearch />
-        <Button type="primary" onClick={handleCreator}>
+        <Button ref={ref} type="primary" onClick={handleCreator}>
           创作者中心
         </Button>
         <UserNav />
       </Flex>
     </div>
   )
-}
+})
 
 export default Header

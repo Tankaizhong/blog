@@ -89,7 +89,7 @@ const PostComment = ({ PostID, isLoggedIn }) => {
           maxLength={100}
           value={commentContent}
           onChange={handleCommentChange}
-          style={{ height: 120, resize: 'none' }}
+          style={{ height: 80 }}
         />
       </Form.Item>
       <Form.Item>

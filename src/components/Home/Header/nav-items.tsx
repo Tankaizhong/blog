@@ -14,16 +14,6 @@ export const navItems: MenuProps['navItems'] = [
     icon: <HomeOutlined />,
   },
   {
-    label: '综合',
-    key: 'posts',
-    icon: <AppstoreOutlined />,
-  },
-  {
-    label: '分类',
-    key: 'categories',
-    icon: <SettingOutlined />,
-  },
-  {
     label: '排行',
     key: 'user',
     icon: <AlignLeftOutlined />, // Add an appropriate icon component for user, for example, UserOutlined

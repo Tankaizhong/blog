@@ -56,7 +56,7 @@ const UserList = () => {
       })
   }
   const handleResetPassword = (record: UserType) => {
-    console.log(record)
+    // console.log(record)
     // 重置密码
     // 1. 生成一个随机密码
     const updateInfor = {
@@ -127,7 +127,7 @@ const UserList = () => {
   ]
   const handleExport = () => {
     const { PassWord, ...data } = users
-    console.log(users, columns)
+    // console.log(users, columns)
     exportToExcel(columns, users, 'users.xlsx')
   }
   return (

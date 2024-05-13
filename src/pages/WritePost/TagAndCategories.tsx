@@ -40,7 +40,6 @@ const TagAndCategories = ({ onCategoryChange, onTagChange, onSubmit, onSummaryCh
 
   // 处理选择标签变化
   const handleTagChange = (value) => {
-
     onTagChange(value) // 将选中的标签传递给父组件
   }
 

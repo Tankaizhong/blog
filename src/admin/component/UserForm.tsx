@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Input, Button, Modal, Upload, InputNumber, message } from 'antd'
 import { UserType } from '@/types/model'
-import { updateUser, uploadAvatar, createUser, register } from '@/api/user'
+import { updateUser, uploadAvatar, createUser, register, checkEmailExist } from '@/api/user'
 import { getStorage, saveStorage } from '@/utils/storage'
 import { LOCAL_STORAGE_NAME } from '@/config'
 import { updateLocalUser } from '@/utils/user'
-
+import { Validator } from 'antd/lib/form/utils'
 interface UserFormProps {
   userInfo: UserType
   onClose: () => void
@@ -37,7 +37,6 @@ const UserForm: React.FC<UserFormProps> = ({ userInfor, onClose }) => {
       const { Avatar, ...otherInfo } = values
       await updateUser(otherInfo)
         .then((res) => {
-          console.log(res)
           //判断是否存储本地呢
           if (getStorage(LOCAL_STORAGE_NAME).UserID === res.user.UserID) {
             updateLocalUser(values)
@@ -89,6 +88,26 @@ const UserForm: React.FC<UserFormProps> = ({ userInfor, onClose }) => {
       })
   }
 
+  //邮箱验证
+  const validateEmail: Validator = async (_, value) => {
+    // 检查邮箱格式
+    if (value && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
+      throw new Error('请输入正确的邮箱格式')
+    }
+    console.log(value)
+    // 检查邮箱是否已被注册
+    if (value) {
+      try {
+        const res = await checkEmailExist(value) // 调用后端 API 检查邮箱是否已存在
+        if (res.data.exist) {
+          throw new Error('该邮箱已被注册')
+        }
+      } catch (error) {
+        throw new Error('验证邮箱失败，请重试') // 处理检查邮箱是否存在的请求失败情况
+      }
+    }
+  }
+
   return (
     <Form form={form} layout="vertical" onFinish={handleSubmit}>
       <Form.Item
@@ -101,7 +120,11 @@ const UserForm: React.FC<UserFormProps> = ({ userInfor, onClose }) => {
       <Form.Item name="Nickname" label="昵称" rules={[{ required: true, message: '请输入昵称' }]}>
         <Input />
       </Form.Item>
-      <Form.Item name="Email" label="邮箱" rules={[{ required: true, message: '请输入邮箱' }]}>
+      <Form.Item
+        name="Email"
+        label="邮箱"
+        rules={[{ required: true, message: '请输入邮箱' }, { validator: validateEmail }]}
+      >
         <Input />
       </Form.Item>
       <Form.Item name="Avatar" label="头像">

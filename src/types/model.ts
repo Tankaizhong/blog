@@ -12,6 +12,8 @@ export interface UserType {
   PhoneNumber?: string
   Admin: boolean
   token?: string
+  LastLoginTime?: Date
+  LoginCount: number
   Status: 'active' | 'inactive' | 'blocked'
 }
 
@@ -36,7 +38,7 @@ export interface CommentType {
   Content: string
   createdAt?: number
   Username?: string
-  isReported?:boolean
+  isReported?: boolean
 }
 
 export interface CategoryType {

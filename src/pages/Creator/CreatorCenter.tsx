@@ -1,17 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { Layout, Typography, Row, Col, Statistic, Button, Table, message, Modal } from 'antd'
+import {
+  Layout,
+  Typography,
+  Row,
+  Col,
+  Statistic,
+  Button,
+  Table,
+  message,
+  Modal,
+  Divider,
+} from 'antd'
 import '@/styles/publish-post.less'
 import { getStorage } from '@/utils/storage'
 import { LOCAL_STORAGE_NAME } from '@/config'
 import { useHistory } from 'react-router-dom'
 //使用路由
 import { fetchCurrentPostList } from '@/api/user'
-
 import { navigateTo } from '@/utils/router'
 import { deletePostByPostID } from '@/api/posts'
 import { PostType, UserType } from '@/types/model'
 import { calculatePostStats } from '@/utils/dataProcess'
-
+import CountUp from 'react-countup'
 const { Content } = Layout
 const { Title } = Typography
 
@@ -139,13 +149,22 @@ const PublishPost = () => {
     totalComments: 0,
   })
 
+  const formatter = (value) => <CountUp end={value as number} separator="," />
+
   return (
     <Layout className="publish-post-layout">
-      <Content className="publish-post-content">
-        <Title level={4}>发布文章</Title>
-        <Row gutter={[16, 16]}>
+      <Content className="publish-post-content creator-content">
+        <span>数据概况</span>
+        {/*分割线*/}
+        <Divider />
+        <Row className="statistic-show" gutter={[16, 16]}>
           <Col xs={24} sm={12} md={6}>
-            <Statistic title="文章展示数" value={stats.totalPosts} align="center" />
+            <Statistic
+              title="文章展示数"
+              formatter={formatter}
+              value={stats.totalPosts}
+              align="center"
+            />
           </Col>
           <Col xs={24} sm={12} md={6}>
             <Statistic title="文章阅读数" value={stats.totalViews} />
@@ -153,14 +172,15 @@ const PublishPost = () => {
           <Col xs={24} sm={12} md={6}>
             <Statistic title="文章点赞数" value={stats.totalLikes} />
           </Col>
-          <Col xs={24} sm={12} md={6}>
+          <Col>
             <Statistic title="文章评论数" value={stats.totalComments} />
           </Col>
         </Row>
-        {/* 这里放置发布文章的表单或者其他内容 */}
-        {/*<Button type="primary" onClick={handleSubmit}>发布文章</Button>*/}
-        <Table dataSource={Post} columns={columns} pagination={false} />
       </Content>
+
+      <div className="table-content creator-content">
+        <Table dataSource={Post} columns={columns} pagination={false} />
+      </div>
     </Layout>
   )
 }

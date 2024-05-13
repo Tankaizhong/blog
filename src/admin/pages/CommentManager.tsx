@@ -6,7 +6,6 @@ import '../style/CommentManager.less'
 import { showConfirm } from '@/utils/button'
 import { unblockComment } from '@/admin/api/admin'
 
-
 const CommentManager: React.FC = () => {
   const [comments, setComments] = useState<CommentType[]>([])
 

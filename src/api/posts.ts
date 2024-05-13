@@ -2,7 +2,6 @@
 
 import service from '@/utils/axios'
 
-
 export const fetchCategoriesList = () => {
   return service.get('/user/categoriesList')
 }

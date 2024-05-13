@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Input } from 'antd'
+import { Button, Input } from 'antd'
 const { TextArea } = Input
 // 引入样式
 import '@/styles/chat.less'
@@ -18,12 +18,8 @@ const ChatGPTIndex = () => {
     <div className="chat-index">
       {/* 输入区域 */}
       <div className="chat-input">
-        <Input
-          type="text"
-          value={inputText}
-          onChange={handleInputChange}
-          placeholder="输入你的消息..."
-        />
+        <Input value={inputText} onChange={handleInputChange} placeholder="输入你的消息..." />
+        <Button>发送</Button>
       </div>
 
       {/* 展示区域 */}

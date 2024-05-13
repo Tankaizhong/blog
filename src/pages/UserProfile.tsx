@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react'
-import {Button, Flex, Form, Image, Input, message, Upload} from 'antd'
-import {UploadOutlined} from '@ant-design/icons'
+import React, { useEffect, useState } from 'react'
+import { Button, Flex, Form, Image, Input, message, Upload } from 'antd'
+import { UploadOutlined } from '@ant-design/icons'
 import '@/styles/user-profile.less' // 引入自定义样式文件
-import {getStorage, saveStorage} from '@/utils/storage'
-import {LOCAL_STORAGE_NAME} from '@/config'
-import {UserType} from '@/types/model'
-import {updateUser, uploadAvatar} from '@/api/user'
+import { getStorage, saveStorage } from '@/utils/storage'
+import { LOCAL_STORAGE_NAME } from '@/config'
+import { UserType } from '@/types/model'
+import { updateUser, uploadAvatar } from '@/api/user'
 import ResetPasswordModal from '@/components/ResetPasswordModal'
 
 const UserProfileEdit = () => {
@@ -62,7 +62,7 @@ const UserProfileEdit = () => {
           // 更新用户信息
           const storedUserInfo = getStorage(LOCAL_STORAGE_NAME)
           if (storedUserInfo) {
-            const {imageUrl} = res;
+            const { imageUrl } = res
             setUserInfo({ ...storedUserInfo, Avatar: imageUrl })
             saveStorage(LOCAL_STORAGE_NAME, { ...storedUserInfo, Avatar: imageUrl })
           }

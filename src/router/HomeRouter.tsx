@@ -4,7 +4,7 @@ import Home from '@/pages/Home/Home'
 import { Navigate } from 'react-router-dom'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
-import CreatorCenter from '@/components/Creater/CreatorCenter'
+import CreatorCenter from '@/pages/Creator/CreatorCenter'
 import HomeContent from '@/pages/Home/HomeContent'
 import WritePost from '@/pages/WritePost/WritePost'
 import PostDetail from '@/pages/Post/PostDetail'
@@ -13,6 +13,8 @@ import Agreement from '@/pages/Agreement'
 import { withAuth } from '@/HOC/withAuth'
 import UserRankings from '@/pages/UserRankings'
 import ChatGPTIndex from '@/pages/ChatGPT/ChatGPTIndex'
+import Inspiration from '@/pages/Creator/Inspiration'
+import CreatorHelp from '@/pages/Creator/CreatorHelp'
 
 const routes: IRoute[] = [
   //为空时重定位到home
@@ -39,6 +41,18 @@ const routes: IRoute[] = [
         path: 'all/:sharedState?/:query?',
         name: 'HomeContent',
         element: <HomeContent />,
+      },
+      //创作灵感
+      {
+        path: 'creator/inspiration',
+        name: 'inspiration',
+        element: withAuth(<Inspiration />), //路由鉴权
+      },
+      //帮助中心
+      {
+        path: 'creator/help',
+        name: 'help',
+        element: withAuth(<CreatorHelp />), //路由鉴权
       },
     ],
   },

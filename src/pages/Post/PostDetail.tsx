@@ -35,6 +35,7 @@ const PostDetail = () => {
         .then((res) => {})
       setViewed(true) // 标记为已发送浏览量增加的请求
     }
+
     if (isLoggedIn) {
       //登陆才检查
       fetchLikeStatus(PostID).then((res: any) => {

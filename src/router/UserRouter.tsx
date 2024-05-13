@@ -12,5 +12,10 @@ const routes: IRoute[] = [
     path: '/account/notifications',
     element: <NotificationComponent />,
   },
+  //我的评论
+  {
+    path: '/account/myComments',
+    element: <NotificationComponent />,
+  },
 ]
 export default routes

@@ -1,14 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Layout,
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  message,
-  Flex,
-  Drawer,
-} from 'antd'
+import { Layout, Form, Input, Button, Checkbox, message, Flex, Drawer } from 'antd'
 import MarkdownEditor from './MarkdownEditor' // 假设有一个 Markdown 编辑器组件
 import { publishPost } from '@/api/posts' // 导入获取分类和标签的接口方法
 import '@/styles/write-post.less'

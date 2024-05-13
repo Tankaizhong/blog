@@ -18,6 +18,6 @@ export const addTag = (tagDate: TagType) => {
 }
 
 export const updateTag = (tagDate: TagType) => {
-  console.log(tagDate)
+  // console.log(tagDate)
   return service.post('tag/updateTag', { tagDate })
 }

@@ -21,7 +21,7 @@ const LogoutButton = () => {
   }
 
   return (
-    <Button className="logout-btn" type="danger" onClick={handleLogout}>
+    <Button className="logout-btn" type="text" onClick={handleLogout}>
       退出登录
     </Button>
   )

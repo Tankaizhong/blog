@@ -12,6 +12,7 @@ import { getLikeCount } from '@/api/like'
 import { UserType } from '@/types/model'
 
 import UserForm from '@/admin/component/UserForm'
+import { isFirstTimeUser } from '@/utils/user'
 
 const UserNav = () => {
   const [visible, setVisible] = useState(false)
@@ -61,7 +62,7 @@ const UserNav = () => {
 
   const [showUserForm, setShowUserForm] = useState(false)
   useEffect(() => {
-    if (userInfo && !userInfo.Email) {
+    if (isFirstTimeUser()) {
       setShowUserForm(true)
     }
   }, [userInfo])
@@ -76,7 +77,9 @@ const UserNav = () => {
                   查看点赞
                 </Button>
                 <br />
-                <Button type="text">我的点赞</Button>
+                <Button type="text" href="/account/notifications" target="_blank">
+                  我的点赞
+                </Button>
               </div>
             }
             trigger="hover"

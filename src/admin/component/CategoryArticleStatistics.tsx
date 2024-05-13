@@ -9,7 +9,7 @@ const CategoryArticleStatistics = () => {
   useEffect(() => {
     fetchAllPostGroupByCategory() // 假设这是一个异步函数，用于获取分类统计数据
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         renderPieChart('category-chart', data)
       })
       .catch((error) => {

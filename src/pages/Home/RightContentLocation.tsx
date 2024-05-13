@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import '@/styles/right-content-location.less'
 
-
 import AMapLoader from '@amap/amap-jsapi-loader'
 import { LOCATION_API_KEY } from '@/config'
 
@@ -44,7 +43,13 @@ const RightContentLocation = () => {
 
   return (
     <div className="right-content-location">
-      <div className="location-title-content">位置</div>
+      <div className="location-title-content">
+        {/*添加svg*/}
+        <div className="icon-content">
+          <img src="../../../public/location.svg" alt="location" />
+        </div>
+        位置
+      </div>
 
       <div className="location-content">
         <div id="location-content" className="mapContainer"></div>
