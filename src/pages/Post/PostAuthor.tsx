@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Avatar, Typography, Divider, Statistic, Flex, Space } from 'antd'
+import { Avatar, Divider, Statistic, Flex, Space } from 'antd'
 import { fetchCurrentPostList } from '@/api/user' // 导入获取用户文章和总阅读数的 API 函数
 import '@/styles/post-author.less'
 import { calculatePostStats } from '@/utils/dataProcess'
-
-const { Title, Text } = Typography
 
 const PostAuthor = ({ author }) => {
   const [stats, setStats] = useState({

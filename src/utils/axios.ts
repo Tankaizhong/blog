@@ -34,17 +34,6 @@ const fuzzyMatch = (path, pattern) => {
 service.interceptors.request.use(
   (config) => {
     const token = getToken()
-    // 检查是否需要 token 的路径模糊匹配
-    const needsToken = routesRequiringToken.some((pattern) => fuzzyMatch(config.url, pattern))
-    // if (needsToken && !token) {
-    //     // 这里你可以根据实际需求选择抛出错误或者重定向到登录页面
-    //     // 抛出错误
-    //     message.error('请先登录');
-    //     return Promise.reject('请先登录');
-    //     // 或者重定向到登录页面
-    //     // window.location.href = '/login';
-    // }
-
     if (token) {
       config.headers['Authorization'] = token // 如果需要 token 并且存在 token，则在请求头中添加 Authorization 字段
     }

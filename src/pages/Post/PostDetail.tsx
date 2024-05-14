@@ -77,7 +77,7 @@ const PostDetail = () => {
 
   return (
     <div className="post-detail-content">
-      <Flex gap="small" horizontal="true">
+      <Flex gap={1} horizontal={true}>
         {post && (
           <div className="like-post-button">
             <div className="like-button">

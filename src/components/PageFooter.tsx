@@ -11,7 +11,7 @@ const PageFooter: React.FC = () => {
               <a href="#">关于我</a>
             </li>
             <li>
-              <a href="#">服务项目</a>
+              <a href="/privacy">隐私政策</a>
             </li>
             <li>
               <a href="https://qm.qq.com/q/8REqfLkV1e">联系我</a>

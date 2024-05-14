@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import '@/styles/right-content-location.less'
 
 import AMapLoader from '@amap/amap-jsapi-loader'
 import { LOCATION_API_KEY } from '@/config'
 
 const RightContentLocation = () => {
+  const [weather, setWeather] = useState(null)
+  const [location, setLocation] = useState({ latitude: null, longitude: null })
+
   useEffect(() => {
     // 获取当前位置的经纬度
     if (navigator.geolocation) {
@@ -50,7 +53,6 @@ const RightContentLocation = () => {
         </div>
         位置
       </div>
-
       <div className="location-content">
         <div id="location-content" className="mapContainer"></div>
       </div>

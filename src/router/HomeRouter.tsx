@@ -15,6 +15,7 @@ import UserRankings from '@/pages/UserRankings'
 import ChatGPTIndex from '@/pages/ChatGPT/ChatGPTIndex'
 import Inspiration from '@/pages/Creator/Inspiration'
 import CreatorHelp from '@/pages/Creator/CreatorHelp'
+import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage'
 
 const routes: IRoute[] = [
   //为空时重定位到home
@@ -91,6 +92,12 @@ const routes: IRoute[] = [
     path: '/chat',
     name: 'chat',
     element: <ChatGPTIndex />,
+  },
+  //  页脚
+  {
+    path: '/privacy',
+    name: 'privacy',
+    element: <PrivacyPolicyPage />,
   },
 ]
 

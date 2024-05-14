@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, Button, Modal, Upload, InputNumber, message } from 'antd'
+import { Form, Input, Button, Upload, InputNumber, message, Select } from 'antd'
 import { UserType } from '@/types/model'
 import { updateUser, uploadAvatar, createUser, register, checkEmailExist } from '@/api/user'
 import { getStorage, saveStorage } from '@/utils/storage'
@@ -10,7 +10,7 @@ interface UserFormProps {
   userInfo: UserType
   onClose: () => void
 }
-
+const { Option } = Select
 const UserForm: React.FC<UserFormProps> = ({ userInfor, onClose }) => {
   const [form] = Form.useForm()
   const [avatarFile, setAvatarFile] = useState<File | null>(null)
@@ -97,16 +97,21 @@ const UserForm: React.FC<UserFormProps> = ({ userInfor, onClose }) => {
     console.log(value)
     // 检查邮箱是否已被注册
     if (value) {
-      try {
-        const res = await checkEmailExist(value) // 调用后端 API 检查邮箱是否已存在
-        if (res.data.exist) {
-          throw new Error('该邮箱已被注册')
-        }
-      } catch (error) {
-        throw new Error('验证邮箱失败，请重试') // 处理检查邮箱是否存在的请求失败情况
+      const res = await checkEmailExist(value) // 调用后端 API 检查邮箱是否已存在
+      if (res.exist) {
+        throw new Error('该邮箱已被注册')
       }
     }
   }
+
+  //邮箱后缀选择
+  const selectAfter = (
+    <Select defaultValue="@qq.com">
+      <Option value="@qq.com">@qq.com</Option>
+      <Option value="@163.com">@163.com</Option>
+      <Option value="@icloud.com">@icloud.com</Option>
+    </Select>
+  )
 
   return (
     <Form form={form} layout="vertical" onFinish={handleSubmit}>
@@ -125,7 +130,7 @@ const UserForm: React.FC<UserFormProps> = ({ userInfor, onClose }) => {
         label="邮箱"
         rules={[{ required: true, message: '请输入邮箱' }, { validator: validateEmail }]}
       >
-        <Input />
+        <Input addonAfter={selectAfter} />
       </Form.Item>
       <Form.Item name="Avatar" label="头像">
         <Upload

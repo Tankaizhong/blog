@@ -8,13 +8,13 @@ const LikeButton = ({ handleLiked, liked }) => {
     config: { tension: 200, friction: 10 }, // 调整动画的弹性和摩擦力
   } as any)
 
-  const handleLike = () => {
-    handleLiked(!liked) // 反转 liked 状态并通过回调函数通知父组件
+  const handleClick = () => {
+    handleLiked(!liked)
   }
 
   return (
     <div>
-      <animated.div style={springProps} onClick={handleLike} className={liked ? 'liked' : ''}>
+      <animated.div style={springProps} onClick={handleClick} className={liked ? 'liked' : ''}>
         <LikeOutlined style={{ fontSize: '14px', color: liked ? '#1e80ff' : '#8a919f' }} />
       </animated.div>
     </div>

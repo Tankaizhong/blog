@@ -73,12 +73,8 @@ const PublishPost = () => {
         setConfirmDeleteVisible(false)
       })
       .catch((error) => {
-        // 删除失败后的操作
-        // 隐藏确认对话框
         setConfirmDeleteVisible(false)
-        // 取消加载状态
         setDeleting(false)
-        // 处理删除失败的情况
         console.error('删除失败:', error)
       })
   }

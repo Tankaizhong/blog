@@ -15,7 +15,7 @@ const UserComment = ({ comment }) => {
   const { User, Content, CommentDate, CommentID }: { User: UserType } = comment
   const [liked, setLiked] = useState(false) // 定义 liked 状态和修改 liked 状态的函数
   const [likeCount, setLikeCount] = useState(0) // 定义点赞数状态
-  console.log(count++)
+
   // 获取评论的点赞状态
   useEffect(() => {
     if (getToken()) {

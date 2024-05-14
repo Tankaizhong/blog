@@ -78,7 +78,7 @@ const PostComment = ({ PostID, isLoggedIn }) => {
   const handleLogin = () => {
     setVisible(true)
   }
-  console.log(isLoggedIn)
+
   return (
     <div>
       <Divider />
@@ -90,6 +90,7 @@ const PostComment = ({ PostID, isLoggedIn }) => {
           value={commentContent}
           onChange={handleCommentChange}
           style={{ height: 80 }}
+          reSize={false}
         />
       </Form.Item>
       <Form.Item>

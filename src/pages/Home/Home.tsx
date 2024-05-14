@@ -105,11 +105,6 @@ const Home: React.FC = () => {
       description: '这是文章的分类。',
       target: () => sliderRef.current,
     },
-    // {
-    //   title:'菜单',
-    //   description: '这是菜单，您可以在这里进行导航',
-    //   target: () => menuRef.current,
-    // },
     {
       title: '创作者中心',
       description: '这是创作者中心，您可以在这里查看和发布文章。',
@@ -141,7 +136,7 @@ const Home: React.FC = () => {
                 mode="inline"
                 onClick={handleMenuClick} // 添加点击事件处理函数
                 items={location.pathname.includes('creator') ? userList : categories}
-                defaultSelectedKeys={categories.length > 0 ? categories[0].key : []} // 设置默认选中项的 key
+                defaultSelectedKeys={['']} // 设置默认选中项的 key
               />
             </Sider>
           </div>

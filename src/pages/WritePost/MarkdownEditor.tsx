@@ -1,6 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Input } from 'antd'
+import '@/styles/markdown-editor.less' // 假设样式文件存储在这个路径下
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import { getStorage, saveStorage } from '@/utils/storage'
+import { LOCAL_STORAGE_POST } from '@/config'
 
 const MarkdownEditor: React.FC<{ value: string; onChange: (value: string) => void }> = ({
   value,
@@ -14,27 +19,24 @@ const MarkdownEditor: React.FC<{ value: string; onChange: (value: string) => voi
     setInputValue(newValue)
     onChange(newValue) // 将新值传递给父组件
   }
+  useEffect(() => {
+    setInputValue(value)
+  }, [value])
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        {/* 编辑器 */}
-        <Input.TextArea
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="在这里写 Markdown 文本"
-          autoSize={{ minRows: 10 }}
-          style={{
-            width: '50%',
-            marginRight: '10px',
-            border: '1px solid #d9d9d9',
-            borderRadius: '0',
-          }}
+    <div className="markdown-editor">
+      <Input.TextArea
+        value={inputValue}
+        onChange={handleInputChange}
+        placeholder="在这里写 Markdown 文本"
+        className="editor"
+      />
+      <div className="preview">
+        <ReactMarkdown
+          children={inputValue}
+          remarkPlugins={[remarkMath]}
+          rehypePlugins={[rehypeKatex]}
         />
-        {/* 预览区 */}
-        <div style={{ width: '50%', border: '1px solid #d9d9d9', padding: '10px' }}>
-          <ReactMarkdown>{inputValue}</ReactMarkdown>
-        </div>
       </div>
     </div>
   )

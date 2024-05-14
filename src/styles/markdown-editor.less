@@ -1,0 +1,28 @@
+.markdown-editor {
+  display: flex;
+  justify-content: space-between;
+  //background-color: red;
+  height: 100vh;
+
+  .editor {
+    width: 50%;
+    margin-right: 10px;
+    border: 1px solid #d9d9d9;
+    border-radius: 0;
+  }
+
+  .preview {
+    width: 50%;
+    height: 100vh;
+    border: 1px solid #d9d9d9;
+    padding: 10px;
+    //滚动
+    overflow-y: scroll;
+    img {
+      max-width: 80%;
+      height: auto;
+      display: block;
+      margin: 0 auto; /* 图片居中 */
+    }
+  }
+}
